@@ -10,53 +10,118 @@ using System.Threading.Tasks;
 
 namespace MarketSystem.Services
 {
-    public class MarketService
+    public class MarketService : IMarketable
     {
-        private static SubMenuProduct menuHelper = new();
+        List<Products> Products;
+        List<Sales> Sales;
+        List<SalesItems> SalesItems;
 
-        public static void ProductAdd()
+        public MarketService()
         {
-            try
-            {
-                Console.WriteLine("Choose product category :");
-                ProductCategory[]productCategories = (ProductCategory[])Enum.GetValues(typeof(ProductCategory));
-                foreach (ProductCategory productCategory in productCategories) { Console.WriteLine(productCategory); }
-                Console.WriteLine("----------------");
-                string category = Console.ReadLine();
-                Console.WriteLine("Enter Product name:");
-                string name = Console.ReadLine();
-                Console.WriteLine("Enter product price");
-                decimal price = Decimal.Parse(Console.ReadLine());
-                Console.WriteLine("Enter product count");
-                int count = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("Enter product code");
-                string code = Console.ReadLine();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Oops! Got an error!");
-                Console.WriteLine(ex.Message);
-            }
+            Products = new();
+            Sales = new();
+            SalesItems = new();
         }
-        public static void ProductRemove()
+        public List<Products> GetProducts()
         {
-            try
-            {
-                Console.WriteLine("Enter product ID :");
-                int productId = int.Parse(Console.ReadLine());
-                //
-                Console.WriteLine($"Succesfully deleted product with ID: {productId}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Oops! Got an error!");
-                Console.WriteLine(ex.Message);
-            }
+            return Products;
         }
-        public static void MakeProduct()
+        public int AddNewProducut(string name, decimal price,
+            string code, string productcategory, int count)
         {
-
+            if (string.IsNullOrWhiteSpace(name))
+                throw new FormatException("Name is empty!");
+            if (price < 0)
+                throw new FormatException("Price is lower than 0!");
+            if (string.IsNullOrWhiteSpace(code))
+                throw new FormatException("Invalid code");
+            if (string.IsNullOrWhiteSpace(productcategory))
+                throw new FormatException("Choose category!");
+            if (count < 0)
+                throw new FormatException("Invalid count");
+            bool isSuccessful = Enum.TryParse(typeof(ProductCategory), productcategory, true, out object parsedCategory);
+            if (!isSuccessful)
+            {
+                throw new InvalidDataException("Category not found");
+            }
+            var newProduct = new Products
+            {
+                ProductName = name,
+                ProductPrice = price,
+                Code = code,
+                Count = count,
+                Category = (ProductCategory)parsedCategory
+            };
+            Products.Add(newProduct);
+            return newProduct.Id;
         }
 
-    } 
+        public void AddSale()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CommonRemoveSale()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowAllProducts()
+        {
+            List<Products> GetProducts()
+            {
+                return Products;
+            }
+        }
+
+        public void RemoveByDate()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveByNumber()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveByPayment()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveByPeriod()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveProductByCategory()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveProductByName()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveProductByPrice()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveSale()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateProductCategory()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowAllSales()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

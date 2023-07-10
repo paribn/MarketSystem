@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarketSystem.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,8 @@ namespace MarketSystem.Common.Interface
 {
     public interface IMarketable
     {
-        void Sales();
-        void Product();
+        void ShowAllSales();
+        void ShowAllProducts();
         void AddSale();
         void RemoveSale();
         void CommonRemoveSale();
@@ -17,7 +18,8 @@ namespace MarketSystem.Common.Interface
         void RemoveByDate();
         void RemoveByPayment();
         void RemoveByNumber();
-        void AddNewProducut();
+        int AddNewProducut(string name, decimal price,
+            string code, string productcategory, int count);
         void UpdateProductCategory();
         void RemoveProductByCategory();
         void RemoveProductByPrice();

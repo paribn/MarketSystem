@@ -7,7 +7,7 @@ namespace MarketSystem
         static void Main(string[] args)
         {
             int option;
-
+            
             do
             {
                 Console.WriteLine("1.Operate on products");

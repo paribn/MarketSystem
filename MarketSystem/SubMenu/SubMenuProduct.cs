@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MarketSystem.Common.Models;
 using MarketSystem.Services;
 
 namespace MarketSystem.SubMenu
@@ -38,13 +39,14 @@ namespace MarketSystem.SubMenu
                 switch (option)
                 {
                     case 1:
-                        MarketService.ProductAdd();
-                        break;
+                        MenuService.ProductAdd();
+                            break;
                     case 2:
                         break;
                     case 3:
                         break;
                     case 4:
+                       
                         break;
                     case 5:
                         break;
