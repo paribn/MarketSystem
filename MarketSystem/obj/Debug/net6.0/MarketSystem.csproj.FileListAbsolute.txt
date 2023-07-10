@@ -1,0 +1,17 @@
+C:\Users\Rovsen Novruzov\Downloads\MarketSystem\MarketSystem\bin\Debug\net6.0\MarketSystem.exe
+C:\Users\Rovsen Novruzov\Downloads\MarketSystem\MarketSystem\bin\Debug\net6.0\MarketSystem.deps.json
+C:\Users\Rovsen Novruzov\Downloads\MarketSystem\MarketSystem\bin\Debug\net6.0\MarketSystem.runtimeconfig.json
+C:\Users\Rovsen Novruzov\Downloads\MarketSystem\MarketSystem\bin\Debug\net6.0\MarketSystem.dll
+C:\Users\Rovsen Novruzov\Downloads\MarketSystem\MarketSystem\bin\Debug\net6.0\MarketSystem.pdb
+C:\Users\Rovsen Novruzov\Downloads\MarketSystem\MarketSystem\obj\Debug\net6.0\MarketSystem.csproj.AssemblyReference.cache
+C:\Users\Rovsen Novruzov\Downloads\MarketSystem\MarketSystem\obj\Debug\net6.0\MarketSystem.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Rovsen Novruzov\Downloads\MarketSystem\MarketSystem\obj\Debug\net6.0\MarketSystem.AssemblyInfoInputs.cache
+C:\Users\Rovsen Novruzov\Downloads\MarketSystem\MarketSystem\obj\Debug\net6.0\MarketSystem.AssemblyInfo.cs
+C:\Users\Rovsen Novruzov\Downloads\MarketSystem\MarketSystem\obj\Debug\net6.0\MarketSystem.csproj.CoreCompileInputs.cache
+C:\Users\Rovsen Novruzov\Downloads\MarketSystem\MarketSystem\obj\Debug\net6.0\MarketSystem.dll
+C:\Users\Rovsen Novruzov\Downloads\MarketSystem\MarketSystem\obj\Debug\net6.0\refint\MarketSystem.dll
+C:\Users\Rovsen Novruzov\Downloads\MarketSystem\MarketSystem\obj\Debug\net6.0\MarketSystem.pdb
+C:\Users\Rovsen Novruzov\Downloads\MarketSystem\MarketSystem\obj\Debug\net6.0\MarketSystem.genruntimeconfig.cache
+C:\Users\Rovsen Novruzov\Downloads\MarketSystem\MarketSystem\obj\Debug\net6.0\ref\MarketSystem.dll
+C:\Users\Rovsen Novruzov\Downloads\MarketSystem\MarketSystem\bin\Debug\net6.0\ConsoleTables.dll
+C:\Users\Rovsen Novruzov\Downloads\MarketSystem\MarketSystem\obj\Debug\net6.0\MarketSystem.csproj.CopyComplete

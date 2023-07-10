@@ -1,0 +1,66 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using MarketSystem.Services;
+
+namespace MarketSystem.SubMenu
+{
+    public class SubMenuProduct
+    {
+        public static void ProductMenu()
+        {
+            Console.Clear();
+            int option;
+            do
+            {
+                Console.WriteLine("1.Add new product");
+                Console.WriteLine("2.Make the product");
+                Console.WriteLine("3.Remove product");
+                Console.WriteLine("4.Show all products");
+                Console.WriteLine("5.Show products by category ");
+                Console.WriteLine("6.Show products by price range");
+                Console.WriteLine("7.Search products by name");
+                Console.WriteLine("0.Go back");
+
+                Console.WriteLine("-----------");
+                Console.WriteLine("Enter option:");
+
+
+                while (!int.TryParse(Console.ReadLine(), out option))
+                {
+                    Console.WriteLine("Invalid number!");
+                    Console.WriteLine("-----------");
+                    Console.WriteLine("Enter option:");
+                }
+
+                switch (option)
+                {
+                    case 1:
+                        MarketService.ProductAdd();
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        break;
+                }
+
+            } while (option != 0);
+        }
+
+    }
+}
+

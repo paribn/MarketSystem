@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "dgSpecHash": "aPTnHMhXOb/HXyQc3NO+qX3E0vtiAa5qOgm4PDYkPV55y1IeXbrvA6sNuTboNB181k1vUlFyshlpHY3sCQ9qXw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Rovsen Novruzov\\Downloads\\MarketSystem\\MarketSystem\\MarketSystem.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Rovsen Novruzov\\.nuget\\packages\\consoletables\\2.4.2\\consoletables.2.4.2.nupkg.sha512",
+    "C:\\Users\\Rovsen Novruzov\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\Rovsen Novruzov\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
+    "C:\\Users\\Rovsen Novruzov\\.nuget\\packages\\system.io\\4.3.0\\system.io.4.3.0.nupkg.sha512",
+    "C:\\Users\\Rovsen Novruzov\\.nuget\\packages\\system.reflection\\4.3.0\\system.reflection.4.3.0.nupkg.sha512",
+    "C:\\Users\\Rovsen Novruzov\\.nuget\\packages\\system.reflection.primitives\\4.3.0\\system.reflection.primitives.4.3.0.nupkg.sha512",
+    "C:\\Users\\Rovsen Novruzov\\.nuget\\packages\\system.reflection.typeextensions\\4.3.0\\system.reflection.typeextensions.4.3.0.nupkg.sha512",
+    "C:\\Users\\Rovsen Novruzov\\.nuget\\packages\\system.runtime\\4.3.0\\system.runtime.4.3.0.nupkg.sha512",
+    "C:\\Users\\Rovsen Novruzov\\.nuget\\packages\\system.text.encoding\\4.3.0\\system.text.encoding.4.3.0.nupkg.sha512",
+    "C:\\Users\\Rovsen Novruzov\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512"
+  ],
+  "logs": []
+}
