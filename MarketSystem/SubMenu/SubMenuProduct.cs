@@ -17,7 +17,7 @@ namespace MarketSystem.SubMenu
             do
             {
                 Console.WriteLine("1.Add new product");
-                Console.WriteLine("2.Make the product");
+                Console.WriteLine("2.Update the products");
                 Console.WriteLine("3.Remove product");
                 Console.WriteLine("4.Show all products");
                 Console.WriteLine("5.Show products by category ");
@@ -39,14 +39,15 @@ namespace MarketSystem.SubMenu
                 switch (option)
                 {
                     case 1:
-                        MenuService.ProductAdd();
+                        ProductsMenuService.AddNewProduct();
                             break;
                     case 2:
                         break;
                     case 3:
+                        ProductsMenuService.DeleteProduct();
                         break;
                     case 4:
-                        MenuService.MenuProduct();
+                        ProductsMenuService.ShowAllProduct();
                         break;
                     case 5:
                         break;

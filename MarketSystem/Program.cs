@@ -1,4 +1,5 @@
 ﻿using ConsoleTables;
+using MarketSystem.Common.Models;
 using MarketSystem.Services;
 using MarketSystem.SubMenu;
 
@@ -8,7 +9,42 @@ namespace MarketSystem
     {
         static void Main(string[] args)
         {
-            ProductService productService = new ProductService();   
+            ProductService productService = new ProductService();
+
+
+
+            Products products = new Products()
+            {
+                Id = 0,
+                ProductName = "Milk",
+                ProductPrice = 2,
+                Category = 0,
+                Count = 3
+            };
+
+
+            Products products1 = new Products()
+            {
+                Id = 5,
+                ProductName = "Bread",
+                ProductPrice = 7,
+                Category = 0,
+                Count = 1
+            };
+            Products products2 = new Products()
+            {
+                Id = 3,
+                ProductName = "Apple",
+                ProductPrice = 23,
+                Category = 0,
+                Count = 4
+            };
+
+            ProductService.Products.Add(products);
+            ProductService.Products.Add(products1);
+            ProductService.Products.Add(products2);
+
+
             int option;
             
             do

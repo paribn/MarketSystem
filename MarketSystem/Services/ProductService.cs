@@ -1,4 +1,5 @@
-﻿using MarketSystem.Common.Enum;
+﻿using ConsoleTables;
+using MarketSystem.Common.Enum;
 using MarketSystem.Common.Interface;
 using MarketSystem.Common.Models;
 using MarketSystem.SubMenu;
@@ -10,20 +11,16 @@ using System.Threading.Tasks;
 
 namespace MarketSystem.Services
 {
-    public class ProductService
+    public class ProductService 
     {
-        static List<Products> Products;
-        List<Sales> Sales;
-        List<SalesItems> SalesItems;
+        public static List<Products> Products;
 
-      
+
         public ProductService()
         {
-            Products = new();
-            Sales = new();
-            SalesItems = new();
+            Products = new List<Products>();
         }
-        public List<Products> GetProducts()
+        public static List<Products> GetProducts()
         {
             return Products;
         }
@@ -53,25 +50,47 @@ namespace MarketSystem.Services
             return newProduct.Id;
         }
 
-        public void DeleteProduct(int productID)
+        public static void DeleteProduct(int productID)
         {
             var existingProduct = Products.FirstOrDefault(x => x.Id == productID);
             if (existingProduct == null)
                 throw new Exception($"Product with ID {productID} not found");
             Products = Products.Where(x => x.Id != productID).ToList();
         }
-
-        public void ShowAllProductCategory(string category)
+        public static void ShowAllProducts()
         {
-            bool IsSuccessfull = Enum.TryParse(typeof(ProductCategory), category, true, 
-                out object parsedCategory);
-            if (!IsSuccessfull)
+            try
             {
-                throw new FormatException("Not Found");
+                var products = GetProducts();
+                var table = new ConsoleTable("ID","Name","Count","Price", "Category");
+                if (products.Count == 0)
+                {
+                    Console.WriteLine("NO PRODUCT YET");
+                    return;
+                }
+                foreach (var product in products)
+                {
+                    table.AddRow(product.Id, product.ProductName,product.Count, product.ProductPrice,
+                         product.Category);
+                }
+                table.Write();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Oops! Got an error!");
+                Console.WriteLine(ex.Message);
             }
         }
 
-        
+        public static void ListEnum()
+        {
+            foreach (var item in Enum.GetNames(typeof(ProductCategory)))
+            {
+                Console.WriteLine(item);
+            }
+        }
+
+
         public void SearchByName(string productname)
         {
             var searchname = ProductService.Products.FindAll(x => x.ProductName.ToLower().Trim() == productname.ToLower()).ToList();
@@ -82,7 +101,7 @@ namespace MarketSystem.Services
         }
 
 
-
+        
 
     }
 }

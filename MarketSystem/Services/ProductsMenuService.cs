@@ -1,5 +1,6 @@
 ﻿using ConsoleTables;
 using MarketSystem.Common.Enum;
+using MarketSystem.Common.Interface;
 using MarketSystem.SubMenu;
 using System;
 using System.Collections.Generic;
@@ -9,49 +10,20 @@ using System.Threading.Tasks;
 
 namespace MarketSystem.Services
 {
-    public class MenuService
+    public class ProductsMenuService :IProductMenu
     {
         private static ProductService productService= new();
 
-        #region Product
-
-        public static void MenuProduct()
+      
+        public static void AddNewProduct()
         {
             try
             {
-             var products = productService.GetProducts();
-                var table = new ConsoleTable("Id", "Name", "Price", "Code", "Category");
-                if (products.Count== 0)
-                {
-                    Console.WriteLine("NO PRODUCT YET");
-                    return;
-                }
-                foreach ( var product in products )
-                {
-                    table.AddRow(product.Id, product.ProductName, product.ProductPrice,
-                         product.Category);
-                }
-                table.Write();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Oops! Got an error!");
-                Console.WriteLine(ex.Message);
-            }
-        }
-        #endregion
-        public static void ProductAdd()
-        {
-            try
-            {
-                // Console.WriteLine("Choose product category :");
-
-                //ProductCategory[] productCategories = (ProductCategory[])Enum.GetValues(typeof(ProductCategory));
-                //foreach (ProductCategory productCategory in productCategories) { Console.WriteLine(productCategory); /*}*/
+                ProductService.ListEnum();
                 Console.WriteLine("Enter your category");
                 string category = Console.ReadLine().Trim();
 
-                
+
                 bool IsSuccessful = Enum.TryParse(typeof(ProductCategory), category, true,
                 out object parsedCategory);
                 if (!IsSuccessful)
@@ -60,7 +32,7 @@ namespace MarketSystem.Services
                 }
 
                 Console.WriteLine("----------------");
-               
+
                 Console.WriteLine("Enter Product name:");
                 string name = Console.ReadLine();
                 Console.WriteLine("----------------");
@@ -74,25 +46,27 @@ namespace MarketSystem.Services
                 int count = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("----------------");
 
-                ProductService.AddProduct(name, price, parsedCategory, count);
-                
-           
+                int id= ProductService.AddProduct(name, price, parsedCategory, count);
+
+                Console.WriteLine( $"Successfuly added product {id}");
+
+                ProductService.ShowAllProducts();
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Oops! Got an error444!"); // runtime erroor
+                Console.WriteLine("Oops! Got an error!");
                 Console.WriteLine(ex.Message);
             }
         }
 
-       
-        public static void ProductRemove()
+        public static void DeleteProduct()
         {
             try
             {
                 Console.WriteLine("Enter product ID :");
                 int productId = int.Parse(Console.ReadLine());
-                productService.DeleteProduct(productId);
+                ProductService.DeleteProduct(productId);
                 Console.WriteLine($"Succesfully deleted product with ID: {productId}");
             }
             catch (Exception ex)
@@ -101,11 +75,31 @@ namespace MarketSystem.Services
                 Console.WriteLine(ex.Message);
             }
         }
-        public static void ShowAllProductCategory()
+
+        public static void ShowAllCategoryProduct()
         {
-            Console.WriteLine("Enter category");
-            string category = Console.ReadLine();    
-            productService.ShowAllProductCategory(category);
+            throw new NotImplementedException();
+        }
+        
+        public static void ShowAllProduct()
+        {
+            ProductService.ShowAllProducts();
+        }
+
+        public static void ShowProductbyName()
+        {
+            Console.WriteLine("Search product by name");
+
+        }
+
+        public static void ShowProductbyPrice()
+        {
+            throw new NotImplementedException();
+        }
+
+        public static void UpdateProduct()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -7,27 +7,36 @@ using System.Threading.Tasks;
 
 namespace MarketSystem.Common.Interface
 {
-    public interface IMarketable
+    public interface IProductMenu
     {
-         void Sales();
-         void Products();
-         void AddSale();
-    
-         void DeleteProduct();
-         void CommonDeleteSale();
-         void DeleteByDateSale();
-         void DeleteByPeriodSale();
-         void DeleteByPaymentSale();
-        
-        void DeleteByIdSale();
-        void AddProduct();
-        void UpdateProductName();
-        void UpdateProductQuantity();
-        void UpdateProductPrice();
-        void UpdateProductCategory();
-        void RemoveProductByCategory();
-        void RemoveProductByPrice();
-        void RemoveProductByName();
+        public static void AddNewProduct()
+        {
+
+        }
+        public static void UpdateProduct()
+        {
+
+        }
+        public static  void DeleteProduct()
+        {
+
+        }
+        public static void ShowAllProduct()
+        {
+
+        }
+        public static void ShowAllCategoryProduct()
+        {
+
+        }
+        public static void ShowProductbyPrice()
+        {
+
+        }
+        public static void ShowProductbyName()
+        {
+
+        }
 
     }
 }
