@@ -46,7 +46,7 @@ namespace MarketSystem.SubMenu
                     case 3:
                         break;
                     case 4:
-                       
+                        MenuService.MenuProduct();
                         break;
                     case 5:
                         break;

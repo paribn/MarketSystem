@@ -18,7 +18,7 @@ namespace MarketSystem.Common.Models
         }
         public string ProductName { get; set; }
         public decimal ProductPrice { get; set; }
-        public string Code { get; set; }
+        //public string Code { get; set; }
         public int Count { get; set; }
         public ProductCategory Category { get; set; }
 

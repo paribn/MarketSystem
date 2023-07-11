@@ -1,4 +1,6 @@
-﻿using MarketSystem.SubMenu;
+﻿using ConsoleTables;
+using MarketSystem.Services;
+using MarketSystem.SubMenu;
 
 namespace MarketSystem
 {
@@ -6,6 +8,7 @@ namespace MarketSystem
     {
         static void Main(string[] args)
         {
+            ProductService productService = new ProductService();   
             int option;
             
             do
