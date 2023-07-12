@@ -11,7 +11,10 @@ namespace MarketSystem
         {
             ProductService productService = new ProductService();
 
-
+            Console.ForegroundColor = ConsoleColor.Green;  // metod yaz 
+            Console.WriteLine("Enter");
+            Console.ResetColor();
+                
 
             Products products = new Products()
             {

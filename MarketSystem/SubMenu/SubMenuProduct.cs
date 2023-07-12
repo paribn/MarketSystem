@@ -51,13 +51,16 @@ namespace MarketSystem.SubMenu
                         ProductsMenuService.ShowAllProduct();
                         break;
                     case 5:
+                        ProductsMenuService.ShowAllCategoryProduct();
                         break;
                     case 6:
+                        ProductsMenuService.ShowProductPricebyRange();
                         break;
                     case 7:
                         ProductsMenuService.ShowProductbyName();
                         break;
                     case 0:
+                        Console.WriteLine("BYE!");
                         break;
                     default:
                         break;

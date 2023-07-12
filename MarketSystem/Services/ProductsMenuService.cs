@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace MarketSystem.Services
 {
-    public class ProductsMenuService :IProductMenu
+    public class ProductsMenuService : IProductMenu
     {
-        private static ProductService productService= new();
+        private static ProductService productService = new();
 
         ///<summary>
         /// This method returns the list of all add new products
         /// </summary>
         public static void AddNewProduct()
         {
-            Console.Clear();
+            // Console.Clear();
             try
             {
                 ProductService.ListEnum();
@@ -50,81 +50,24 @@ namespace MarketSystem.Services
                 int count = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("----------------");
 
-                int id= ProductService.AddProduct(name, price, parsedCategory, count);
+                int id = ProductService.AddProduct(name, price, parsedCategory, count);
 
-                Console.WriteLine( $"Successfuly added product {id}");
+                Console.WriteLine($"Successfuly added product {id}");
 
                 ProductService.ShowAllProducts();
 
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Oops! Got an error!");
-                Console.WriteLine(ex.Message);
+                Console.WriteLine($"Oops! Got an error!{ ex.Message}");
             }
-        }
-
-        public static void DeleteProduct()
-        {
-            try
-            {
-                Console.WriteLine("Enter product ID :");
-                int productId = int.Parse(Console.ReadLine());
-                ProductService.DeleteProduct(productId);
-                Console.WriteLine($"Successfully deleted product with ID: {productId}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Oops! Got an error!");
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-        public static void ShowAllCategoryProduct()
-        {
-            throw new NotImplementedException();
-        }
-
-        public static void ShowAllProduct()
-        {
-            ProductService.ShowAllProducts();
-        }
-
-        public static void ShowProductbyName()
-        {
-            Console.Clear();
-            try
-            {
-                Console.WriteLine("Search product by name");
-                string name = Console.ReadLine();
-                ProductService.SearchByName(name);
-                
-                Console.WriteLine("-------------");
-                Console.WriteLine($"Successfully found:{name}");
-
-                ProductService.SearchByName(name);
-                ProductService.ShowAnyKindOfProductlistInTable(ProductService.SearchByName(name));
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Oops! Got an error!");
-                Console.WriteLine(ex.Message);
-
-            }
-            
-        }
-
-        public static void ShowProductbyPrice()
-        {
-            throw new NotImplementedException();
         }
 
         public static void UpdateProduct()
         {
             try
             {
-                
+
                 Console.WriteLine("Enter the code:");
                 int code = int.Parse(Console.ReadLine());
 
@@ -151,7 +94,7 @@ namespace MarketSystem.Services
 
                 Console.WriteLine("Enter the new price:");
                 decimal newPrice = decimal.Parse(Console.ReadLine());
-                ProductService.UpdateProduct(code,newName,newQuantity,categoryNumber,newPrice);
+                ProductService.UpdateProduct(code, newName, newQuantity, categoryNumber, newPrice);
             }
             catch (Exception ex)
             {
@@ -159,5 +102,77 @@ namespace MarketSystem.Services
 
             }
         }
+        public static void DeleteProduct()
+        {
+            try
+            {
+                Console.WriteLine("Enter product ID :");
+                int productId = int.Parse(Console.ReadLine());
+                ProductService.DeleteProduct(productId);
+                Console.WriteLine($"Successfully deleted product with ID: {productId}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Oops! Got an error!");
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public static void ShowProductbyName()
+        {
+            Console.Clear();
+            try
+            {
+                Console.WriteLine("Search product by name");
+                string name = Console.ReadLine();
+                ProductService.SearchByName(name);
+
+                Console.WriteLine("-------------");
+                Console.WriteLine($"Successfully found:{name}");
+
+                ProductService.SearchByName(name);
+                ProductService.ShowAnyKindOfProductlistInTable(ProductService.SearchByName(name));
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+            }
+
+        }
+        public static void ShowAllCategoryProduct()
+        {
+            
+            Console.WriteLine("Available categories:");
+            foreach (ProductCategory category in Enum.GetValues(typeof(ProductCategory)))
+            {
+                Console.WriteLine($"{(int)category}. {category}");
+            }
+
+            Console.WriteLine("Enter the category (number) to show products:");
+            int categoryNumber = int.Parse(Console.ReadLine());
+
+
+            ProductService.ShowAllCategory(categoryNumber);
+           
+           // ProductService.ShowAnyKindOfProductlistInTable(ProductService.ShowAllCategory(categoryNumber));
+        }
+
+        public static void ShowAllProduct()
+        {
+            ProductService.ShowAllProducts();
+        }
+
+
+        public static void ShowProductPricebyRange()
+        {
+            Console.WriteLine("Enter min price");
+            decimal price = decimal.Parse(Console.ReadLine());
+            Console.WriteLine("Eter max price ");
+            decimal price1= decimal.Parse(Console.ReadLine());
+            ProductService.ShowPriceRange(price, price1);
+        }
     }
 }
+

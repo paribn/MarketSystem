@@ -71,7 +71,7 @@ namespace MarketSystem.Services
             {
                 var products = GetProducts();
                 var table = new ConsoleTable("ID", "Name", "Count", "Price", "Category");
-                if (products.Count == 0)
+                if (products.Count == default)
                 {
                     Console.WriteLine("NO PRODUCT YET");
                     return;
@@ -150,7 +150,50 @@ namespace MarketSystem.Services
 
 
 
+        public static void ShowPriceRange(decimal minPrice, decimal maxPrice)
+        {
+            var range = Products.Where(x => x.ProductPrice >= minPrice && x.ProductPrice <= maxPrice).ToList();
+            if (minPrice > maxPrice) throw new ArgumentException("Minimum price cannot be greater than the maximum price.");
+           
+            var products = GetProducts();
+            var table = new ConsoleTable("ID", "Name", "Count", "Price", "Category");
+            if (products.Count == 0)
+            {
+                Console.WriteLine("NO PRODUCT YET");
+                return;
+            }
+            foreach (var product in products)
+            {
+                table.AddRow(product.Id, product.ProductName, product.Count, product.ProductPrice,
+                     product.Category);
+            }
+            table.Write();
+            return;
+        }
 
+        public static void ShowAllCategory(object productCategory)
+        {
+           
+            if (!Enum.IsDefined(typeof(ProductCategory), productCategory))
+            {
+                Console.WriteLine("Invalid category number!");
+                return;
+            }
 
+            ProductCategory selectedCategory = (ProductCategory)productCategory;
+
+            Console.WriteLine($"Showing products in the {selectedCategory} category:");
+
+            var productsInCategory = Products.Where(x => x.Category == selectedCategory);
+
+            foreach (var product in productsInCategory)
+            {
+                Console.WriteLine($"Name: {product.ProductName}");
+                Console.WriteLine($"Quantity: {product.Count}");
+                Console.WriteLine($"Price: {product.ProductPrice}");
+                Console.WriteLine();
+            }
+
+        }
     }
 }
