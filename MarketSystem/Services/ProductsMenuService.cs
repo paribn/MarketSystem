@@ -15,7 +15,9 @@ namespace MarketSystem.Services
     {
         private static ProductService productService= new();
 
-      
+        ///<summary>
+        /// This method returns the list of all add new products
+        /// </summary>
         public static void AddNewProduct()
         {
             Console.Clear();
@@ -82,7 +84,7 @@ namespace MarketSystem.Services
         {
             throw new NotImplementedException();
         }
-        
+
         public static void ShowAllProduct()
         {
             ProductService.ShowAllProducts();
@@ -99,6 +101,9 @@ namespace MarketSystem.Services
                 
                 Console.WriteLine("-------------");
                 Console.WriteLine($"Successfully found:{name}");
+
+                ProductService.SearchByName(name);
+                ProductService.ShowAnyKindOfProductlistInTable(ProductService.SearchByName(name));
 
             }
             catch (Exception ex)
@@ -117,7 +122,42 @@ namespace MarketSystem.Services
 
         public static void UpdateProduct()
         {
-            
+            try
+            {
+                
+                Console.WriteLine("Enter the code:");
+                int code = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Enter the new name:");
+                string newName = Console.ReadLine();
+
+                Console.WriteLine("Enter the new quantity:");
+                int newQuantity = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Available categories:");
+                foreach (ProductCategory category in Enum.GetValues(typeof(ProductCategory)))
+                {
+                    Console.WriteLine($"{(int)category}. {category}");
+                }
+                Console.WriteLine("Enter the category (number) of the new product:");
+                int categoryNumber = int.Parse(Console.ReadLine());
+
+                if (!Enum.IsDefined(typeof(ProductCategory), categoryNumber))
+                {
+                    Console.WriteLine("Invalid category number!");
+                    return;
+                }
+                ProductCategory newCategory = (ProductCategory)categoryNumber;
+
+                Console.WriteLine("Enter the new price:");
+                decimal newPrice = decimal.Parse(Console.ReadLine());
+                ProductService.UpdateProduct(code,newName,newQuantity,categoryNumber,newPrice);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
+
+            }
         }
     }
 }

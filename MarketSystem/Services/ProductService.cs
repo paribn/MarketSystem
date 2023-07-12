@@ -5,9 +5,11 @@ using MarketSystem.Common.Models;
 using MarketSystem.SubMenu;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace MarketSystem.Services
 {
@@ -24,6 +26,8 @@ namespace MarketSystem.Services
         {
             return Products;
         }
+
+
         public static int AddProduct(string name, decimal price,
             object productCategory, int count)
         {
@@ -57,6 +61,10 @@ namespace MarketSystem.Services
                 throw new Exception($"Product with ID {productID} not found");
             Products = Products.Where(x => x.Id != productID).ToList();
         }
+
+        /// <summary>
+        /// This method returns the list of all products
+        /// </summary>
         public static void ShowAllProducts()
         {
             try
@@ -91,21 +99,58 @@ namespace MarketSystem.Services
         }
 
 
-        public static void SearchByName(string productname)
+        public static List<Products> SearchByName(string productname)
         {
-            var searchname = ProductService.Products.Find(x => x.ProductName.ToLower().Trim() == productname.ToLower());
+            var searchname = ProductService.Products.Where(x => x.ProductName.ToLower().Trim() == productname.ToLower().Trim()).ToList();
             if (searchname == null)
             { throw new Exception($"There is no {productname} product"); }
-             Products = Products.Where(x => x.ProductName != productname).ToList();
-           
+
+            return searchname;
         }
 
-
-        public static void UpdateProduct(string name,string name1)
+        public static void ShowAnyKindOfProductlistInTable(List<Products> productsList)
         {
-            var upDate = Products.FirstOrDefault(x => x.ProductName == name);
-            upDate.ProductName= name1;
-            Console.WriteLine(upDate);
+            try
+            {
+                var products = productsList;
+                var table = new ConsoleTable("ID", "Name", "Count", "Price", "Category");
+                if (products.Count == 0)
+                {
+                    Console.WriteLine("NO PRODUCT YET");
+                    return;
+                }
+                foreach (var product in products)
+                {
+                    table.AddRow(product.Id, product.ProductName, product.Count, product.ProductPrice,
+                         product.Category);
+                }
+                table.Write();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Oops! Got an error!");
+                Console.WriteLine(ex.Message);
+            }
+
         }
+
+
+
+        public static void UpdateProduct(int Id, string name, int count, object category, decimal price)
+        {
+            var Update = Products.FirstOrDefault(x => x.Id == Id);
+            if (Update == null)
+                throw new Exception($"{Id} is invalid");
+
+            Update.ProductName = name;
+            Update.ProductPrice = price;
+            Update.Count = count;
+
+        }
+
+
+
+
+
     }
 }

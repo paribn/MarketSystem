@@ -42,6 +42,7 @@ namespace MarketSystem.SubMenu
                         ProductsMenuService.AddNewProduct();
                             break;
                     case 2:
+                        ProductsMenuService.UpdateProduct();
                         break;
                     case 3:
                         ProductsMenuService.DeleteProduct();
