@@ -54,6 +54,7 @@ namespace MarketSystem.SubMenu
                     case 6:
                         break;
                     case 7:
+                        ProductsMenuService.ShowProductbyName();
                         break;
                     case 0:
                         break;

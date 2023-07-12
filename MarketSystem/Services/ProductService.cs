@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MarketSystem.Services
 {
-    public class ProductService 
+    public class ProductService
     {
         public static List<Products> Products;
 
@@ -32,11 +32,11 @@ namespace MarketSystem.Services
 
             if (price < 0)
                 throw new FormatException("Price is lower than 0!");
-           
-            
+
+
             if (count < 0)
                 throw new FormatException("Invalid count!");
-            
+
             var newProduct = new Products
             {
                 ProductName = name,
@@ -45,7 +45,7 @@ namespace MarketSystem.Services
                 Category = (ProductCategory)productCategory
             };
 
-            ProductService.Products.Add(newProduct);    
+            ProductService.Products.Add(newProduct);
 
             return newProduct.Id;
         }
@@ -62,7 +62,7 @@ namespace MarketSystem.Services
             try
             {
                 var products = GetProducts();
-                var table = new ConsoleTable("ID","Name","Count","Price", "Category");
+                var table = new ConsoleTable("ID", "Name", "Count", "Price", "Category");
                 if (products.Count == 0)
                 {
                     Console.WriteLine("NO PRODUCT YET");
@@ -70,7 +70,7 @@ namespace MarketSystem.Services
                 }
                 foreach (var product in products)
                 {
-                    table.AddRow(product.Id, product.ProductName,product.Count, product.ProductPrice,
+                    table.AddRow(product.Id, product.ProductName, product.Count, product.ProductPrice,
                          product.Category);
                 }
                 table.Write();
@@ -91,17 +91,21 @@ namespace MarketSystem.Services
         }
 
 
-        public void SearchByName(string productname)
+        public static void SearchByName(string productname)
         {
-            var searchname = ProductService.Products.FindAll(x => x.ProductName.ToLower().Trim() == productname.ToLower()).ToList();
-            foreach (var name in searchname)
-            {
-                Console.WriteLine(name.ProductName);
-            }
+            var searchname = ProductService.Products.Find(x => x.ProductName.ToLower().Trim() == productname.ToLower());
+            if (searchname == null)
+            { throw new Exception($"There is no {productname} product"); }
+             Products = Products.Where(x => x.ProductName != productname).ToList();
+           
         }
 
 
-        
-
+        public static void UpdateProduct(string name,string name1)
+        {
+            var upDate = Products.FirstOrDefault(x => x.ProductName == name);
+            upDate.ProductName= name1;
+            Console.WriteLine(upDate);
+        }
     }
 }

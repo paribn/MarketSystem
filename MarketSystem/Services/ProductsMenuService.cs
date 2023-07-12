@@ -1,6 +1,7 @@
 ﻿using ConsoleTables;
 using MarketSystem.Common.Enum;
 using MarketSystem.Common.Interface;
+using MarketSystem.Common.Models;
 using MarketSystem.SubMenu;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace MarketSystem.Services
       
         public static void AddNewProduct()
         {
+            Console.Clear();
             try
             {
                 ProductService.ListEnum();
@@ -67,7 +69,7 @@ namespace MarketSystem.Services
                 Console.WriteLine("Enter product ID :");
                 int productId = int.Parse(Console.ReadLine());
                 ProductService.DeleteProduct(productId);
-                Console.WriteLine($"Succesfully deleted product with ID: {productId}");
+                Console.WriteLine($"Successfully deleted product with ID: {productId}");
             }
             catch (Exception ex)
             {
@@ -88,8 +90,24 @@ namespace MarketSystem.Services
 
         public static void ShowProductbyName()
         {
-            Console.WriteLine("Search product by name");
+            Console.Clear();
+            try
+            {
+                Console.WriteLine("Search product by name");
+                string name = Console.ReadLine();
+                ProductService.SearchByName(name);
+                
+                Console.WriteLine("-------------");
+                Console.WriteLine($"Successfully found:{name}");
 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Oops! Got an error!");
+                Console.WriteLine(ex.Message);
+
+            }
+            
         }
 
         public static void ShowProductbyPrice()
@@ -99,7 +117,7 @@ namespace MarketSystem.Services
 
         public static void UpdateProduct()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
