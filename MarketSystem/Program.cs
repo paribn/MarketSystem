@@ -2,6 +2,7 @@
 using MarketSystem.Common.Models;
 using MarketSystem.Services;
 using MarketSystem.SubMenu;
+using System.Collections.Generic;
 
 namespace MarketSystem
 {
@@ -9,12 +10,13 @@ namespace MarketSystem
     {
         static void Main(string[] args)
         {
+
             ProductService productService = new ProductService();
 
-            Console.ForegroundColor = ConsoleColor.Green;  // metod yaz 
-            Console.WriteLine("Enter");
-            Console.ResetColor();
-                
+            //Console.ForegroundColor = ConsoleColor.Green;  // metod yaz 
+            //Console.WriteLine("Enter");
+            //Console.ResetColor();
+
 
             Products products = new Products()
             {
@@ -49,22 +51,33 @@ namespace MarketSystem
 
 
             int option;
-            
+
             do
             {
-                Console.WriteLine("1.Operate on products");
-                Console.WriteLine("2.Operate on Sales");    
-                Console.WriteLine("0. Exit");
-                Console.WriteLine("-----------");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;  // metod yaz 
+                var table = new ConsoleTable("Numbers", "Description");
+                // Add rows to the table
+                table.AddRow(1, "Operate on products");
+                table.AddRow(2, "Operate on sales");
+                table.AddRow(0, "Exit");
 
-                Console.WriteLine("Enter option:");
+                // Print the table
+                table.Write();
+
+                // Prompt the user for input
+                Console.WriteLine("-----------");
+                Console.Write("Enter option: ");
 
                 while (!int.TryParse(Console.ReadLine(), out option))
                 {
                     Console.WriteLine("Invalid number!");
                     Console.WriteLine("-----------");
-                    Console.WriteLine("Enter option:");
+                    Console.Write("Enter option: ");
                 }
+
+                // Clear the console before the next iteration
+                Console.Clear();
+
 
                 switch (option)
                 {
@@ -72,14 +85,19 @@ namespace MarketSystem
                         SubMenuProduct.ProductMenu();
                         break;
                     case 2:
+                        SubMenuSales.SalesMenu();
                         break;
                     case 0:
-                        Console.WriteLine("Bye!");
+                        Console.WriteLine(new ConsoleTable("Bye!"));
                         break;
                     default:
-                        Console.WriteLine("No such option!");
+                        Console.WriteLine(new ConsoleTable("No such option!"));
                         break;
-                }
+
+
+                }   Console.ResetColor();
+                
+
 
             } while (option != 0);
         }

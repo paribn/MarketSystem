@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleTables;
 using MarketSystem.Common.Models;
 using MarketSystem.Services;
 
@@ -16,15 +17,25 @@ namespace MarketSystem.SubMenu
             int option;
             do
             {
-                Console.WriteLine("1.Add new product");
-                Console.WriteLine("2.Update the products");
-                Console.WriteLine("3.Remove product");
-                Console.WriteLine("4.Show all products");
-                Console.WriteLine("5.Show products by category ");
-                Console.WriteLine("6.Show products by price range");
-                Console.WriteLine("7.Search products by name");
-                Console.WriteLine("0.Go back");
-
+               
+                var table = new ConsoleTable("Numbers", "Description");
+                table.AddRow(1, "Add new product");
+                table.AddRow(2, "Update the products");
+                table.AddRow(3, "Remove product");
+                table.AddRow(4, "Show all products");
+                table.AddRow(5, "Show products by category");
+                table.AddRow(6, "Show products by price range");
+                table.AddRow(7, "Search products by name");
+                table.AddRow(0,"Go back");
+                //Console.WriteLine("1.Add new product");
+                //Console.WriteLine("2.Update the products");
+                //Console.WriteLine("3.Remove product");
+                //Console.WriteLine("4.Show all products");
+                //Console.WriteLine("5.Show products by category ");
+                //Console.WriteLine("6.Show products by price range");
+                //Console.WriteLine("7.Search products by name");
+                //Console.WriteLine("0.Go back");
+                table.Write();
                 Console.WriteLine("-----------");
                 Console.WriteLine("Enter option:");
 
@@ -39,25 +50,25 @@ namespace MarketSystem.SubMenu
                 switch (option)
                 {
                     case 1:
-                        ProductsMenuService.AddNewProduct();
+                        ProductsMenu.AddNewProduct();
                             break;
                     case 2:
-                        ProductsMenuService.UpdateProduct();
+                        ProductsMenu.UpdateProduct();
                         break;
                     case 3:
-                        ProductsMenuService.DeleteProduct();
+                        ProductsMenu.DeleteProduct();
                         break;
                     case 4:
-                        ProductsMenuService.ShowAllProduct();
+                        ProductsMenu.ShowAllProduct();
                         break;
                     case 5:
-                        ProductsMenuService.ShowAllCategoryProduct();
+                        ProductsMenu.ShowAllCategoryProduct();
                         break;
                     case 6:
-                        ProductsMenuService.ShowProductPricebyRange();
+                        ProductsMenu.ShowProductPricebyRange();
                         break;
                     case 7:
-                        ProductsMenuService.ShowProductbyName();
+                        ProductsMenu.ShowProductbyName();
                         break;
                     case 0:
                         Console.WriteLine("BYE!");

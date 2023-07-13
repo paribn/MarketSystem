@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MarketSystem.Services
 {
-    public class ProductsMenuService : IProductMenu
+    public class ProductsMenu : IProductMenu
     {
         private static ProductService productService = new();
 
@@ -25,7 +25,9 @@ namespace MarketSystem.Services
             {
                 ProductService.ListEnum();
                 Console.WriteLine("Enter your category");
-                string category = Console.ReadLine().Trim();
+
+                Console.WriteLine("----------------");
+                string category = Console.ReadLine().Trim().ToLower();
 
 
                 bool IsSuccessful = Enum.TryParse(typeof(ProductCategory), category, true,
@@ -50,16 +52,17 @@ namespace MarketSystem.Services
                 int count = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("----------------");
 
-                int id = ProductService.AddProduct(name, price, parsedCategory, count);
+                ProductService.AddProduct(name,price,category,count);
+                //int id = ProductService.AddProduct(name, price, parsedCategory, count);
 
-                Console.WriteLine($"Successfuly added product {id}");
+                //Console.WriteLine($"Successfully added product with code {id}");
 
                 ProductService.ShowAllProducts();
 
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Oops! Got an error!{ ex.Message}");
+                Console.WriteLine($"Oops! Got an error!{ex.Message}");
             }
         }
 
@@ -102,6 +105,7 @@ namespace MarketSystem.Services
 
             }
         }
+
         public static void DeleteProduct()
         {
             try
@@ -118,9 +122,51 @@ namespace MarketSystem.Services
             }
         }
 
+        public static void ShowAllProduct()
+        {
+            ProductService.ShowAllProducts();
+        }
+
+        public static void ShowAllCategoryProduct()
+        {
+            try
+            {
+               
+                Console.WriteLine("All categories:");
+                foreach (ProductCategory category in Enum.GetValues(typeof(ProductCategory)))
+                {
+                    Console.WriteLine($"{(int)category}. {category}");
+                }
+
+                Console.WriteLine("Enter the category (number):");
+                int categoryNumber = Convert.ToInt32(Console.ReadLine());
+               
+                ProductService.ShowAllCategory(categoryNumber);
+
+              //  ProductService.ShowAnyKindOfProductlistInTable(ProductService.ShowAllCategory(categoryNumber));
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Oops! Got an error!{ex.Message}");
+
+            }
+
+        }
+
+        public static void ShowProductPricebyRange()
+        {
+            Console.WriteLine("Enter min price");
+            decimal price = decimal.Parse(Console.ReadLine());
+            Console.WriteLine("Eter max price ");
+            decimal price1 = decimal.Parse(Console.ReadLine());
+            ProductService.ShowPriceRange(price, price1);
+        }
+
         public static void ShowProductbyName()
         {
-            Console.Clear();
+
             try
             {
                 Console.WriteLine("Search product by name");
@@ -141,38 +187,8 @@ namespace MarketSystem.Services
             }
 
         }
-        public static void ShowAllCategoryProduct()
-        {
-            
-            Console.WriteLine("Available categories:");
-            foreach (ProductCategory category in Enum.GetValues(typeof(ProductCategory)))
-            {
-                Console.WriteLine($"{(int)category}. {category}");
-            }
-
-            Console.WriteLine("Enter the category (number) to show products:");
-            int categoryNumber = int.Parse(Console.ReadLine());
 
 
-            ProductService.ShowAllCategory(categoryNumber);
-           
-           // ProductService.ShowAnyKindOfProductlistInTable(ProductService.ShowAllCategory(categoryNumber));
-        }
-
-        public static void ShowAllProduct()
-        {
-            ProductService.ShowAllProducts();
-        }
-
-
-        public static void ShowProductPricebyRange()
-        {
-            Console.WriteLine("Enter min price");
-            decimal price = decimal.Parse(Console.ReadLine());
-            Console.WriteLine("Eter max price ");
-            decimal price1= decimal.Parse(Console.ReadLine());
-            ProductService.ShowPriceRange(price, price1);
-        }
     }
 }
 

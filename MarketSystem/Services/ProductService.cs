@@ -29,24 +29,31 @@ namespace MarketSystem.Services
 
 
         public static int AddProduct(string name, decimal price,
-            object productCategory, int count)
+            string productCategory, int count)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new FormatException("Name is empty!");
 
-            if (price < 0)
+            if (price < null)
                 throw new FormatException("Price is lower than 0!");
 
 
-            if (count < 0)
+            if (count < null)
                 throw new FormatException("Invalid count!");
+            bool isSuccessful
+                = Enum.TryParse(typeof(ProductCategory), productCategory, true, out object parsedDepartment);
+
+            if (!isSuccessful)
+            {
+                throw new InvalidDataException("Department not found!");
+            }
 
             var newProduct = new Products
             {
                 ProductName = name,
                 ProductPrice = price,
                 Count = count,
-                Category = (ProductCategory)productCategory
+                Category = (ProductCategory)parsedDepartment
             };
 
             ProductService.Products.Add(newProduct);
@@ -153,8 +160,8 @@ namespace MarketSystem.Services
         public static void ShowPriceRange(decimal minPrice, decimal maxPrice)
         {
             var range = Products.Where(x => x.ProductPrice >= minPrice && x.ProductPrice <= maxPrice).ToList();
-            if (minPrice > maxPrice) throw new ArgumentException("Minimum price cannot be greater than the maximum price.");
-           
+            if (minPrice > maxPrice) throw new Exception("Minimum price cannot be greater than the maximum price.");
+
             var products = GetProducts();
             var table = new ConsoleTable("ID", "Name", "Count", "Price", "Category");
             if (products.Count == 0)
@@ -173,12 +180,19 @@ namespace MarketSystem.Services
 
         public static void ShowAllCategory(object productCategory)
         {
-           
+            foreach (var item in Enum.GetNames(typeof(ProductCategory)))
+            {
+                Console.WriteLine(item);
+            }
+
             if (!Enum.IsDefined(typeof(ProductCategory), productCategory))
             {
                 Console.WriteLine("Invalid category number!");
+
                 return;
+
             }
+
 
             ProductCategory selectedCategory = (ProductCategory)productCategory;
 

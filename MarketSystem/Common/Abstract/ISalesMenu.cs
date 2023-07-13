@@ -8,14 +8,38 @@ namespace MarketSystem.Common.Abstract
 {
     public interface ISalesMenu
     {
-        public void AddNewSale();
-        public void RemoveSale();
-        public void DeleteSale();
-        public void ShowAllSales();
-        public void ShowAllSalesDatebyPeriod();
-        public void ShowSalesbyPrice();
-        public void ShowSalesDate();
-        public void SearchSalesNumber();
+        public static void AddNewSale()
+        {
+
+        }
+        public static void RemoveSale()
+        {
+
+        }
+        public static void DeleteSale()
+        {
+
+        }
+        public static void ShowAllSales()
+        {
+
+        }
+        public static void ShowAllSalesDatebyPeriod()
+        {
+
+        }
+        public  static void ShowSalesbyPrice()
+        {
+
+        }
+        public  static void ShowSalesDate()
+        {
+
+        }
+        public static void SearchSalesNumber()
+        {
+
+        }
 
 
     }
