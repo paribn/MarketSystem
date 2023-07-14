@@ -15,8 +15,17 @@ namespace MarketSystem.Common.Models
             Id = _count;
             _count++;
         }
-        public int NumItem { get; set; }
+        
+
+        public int SaleItemNum { get; set; }
+        public int Number { get; set; }
         public Products product { get; set; }
         public int count { get; set; }
+
+        public static void ResetSaleItems()
+        {
+            _count = 1;
+        }
+        
     }
 }

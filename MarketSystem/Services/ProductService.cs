@@ -17,7 +17,6 @@ namespace MarketSystem.Services
     {
         public static List<Products> Products;
 
-
         public ProductService()
         {
             Products = new List<Products>();
@@ -27,18 +26,32 @@ namespace MarketSystem.Services
             return Products;
         }
 
-
+        public static Products GetProductsiD(int code)
+        {
+            return Products.FirstOrDefault(x => x.Id == code);
+        }
         public static int AddProduct(string name, decimal price,
             string productCategory, int count)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new FormatException("Name is empty!");
 
-            if (price < null)
+            if (price < 0)
                 throw new FormatException("Price is lower than 0!");
+            bool isString = false;
+            for (int i = 0;  i<name.Length;i ++)
+            {
+                if (char.IsLetter(name[i]))
+                {
+                    isString = true;
+                }
+            }
+            if (!isString)
+            {
+                throw new Exception( "Name must be string");
+            }
 
-
-            if (count < null)
+            if (count < 0)
                 throw new FormatException("Invalid count!");
             bool isSuccessful
                 = Enum.TryParse(typeof(ProductCategory), productCategory, true, out object parsedDepartment);
@@ -56,7 +69,7 @@ namespace MarketSystem.Services
                 Category = (ProductCategory)parsedDepartment
             };
 
-            ProductService.Products.Add(newProduct);
+            Products.Add(newProduct);
 
             return newProduct.Id;
         }
@@ -80,7 +93,7 @@ namespace MarketSystem.Services
                 var table = new ConsoleTable("ID", "Name", "Count", "Price", "Category");
                 if (products.Count == default)
                 {
-                    Console.WriteLine("NO PRODUCT YET");
+                    Console.WriteLine("NO PRODUCT YEET");
                     return;
                 }
                 foreach (var product in products)
@@ -110,11 +123,14 @@ namespace MarketSystem.Services
         {
             var searchname = ProductService.Products.Where(x => x.ProductName.ToLower().Trim() == productname.ToLower().Trim()).ToList();
             if (searchname == null)
-            { throw new Exception($"There is no {productname} product"); }
+                throw new Exception($"There is no {searchname} product");
 
             return searchname;
         }
 
+        /// <summary>
+        /// this table method
+        /// </summary>
         public static void ShowAnyKindOfProductlistInTable(List<Products> productsList)
         {
             try
@@ -123,7 +139,7 @@ namespace MarketSystem.Services
                 var table = new ConsoleTable("ID", "Name", "Count", "Price", "Category");
                 if (products.Count == 0)
                 {
-                    Console.WriteLine("NO PRODUCT YET");
+                    Console.WriteLine("NO PRODUCT YEET");
                     return;
                 }
                 foreach (var product in products)
@@ -141,35 +157,34 @@ namespace MarketSystem.Services
 
         }
 
-
-
         public static void UpdateProduct(int Id, string name, int count, object category, decimal price)
         {
             var Update = Products.FirstOrDefault(x => x.Id == Id);
             if (Update == null)
                 throw new Exception($"{Id} is invalid");
-
+            if (price < 0)
+                throw new FormatException("Price is lower than 0!");
+            if (count < 0)
+                throw new FormatException("Invalid count!");
             Update.ProductName = name;
             Update.ProductPrice = price;
             Update.Count = count;
 
         }
 
-
-
         public static void ShowPriceRange(decimal minPrice, decimal maxPrice)
         {
-            var range = Products.Where(x => x.ProductPrice >= minPrice && x.ProductPrice <= maxPrice).ToList();
-            if (minPrice > maxPrice) throw new Exception("Minimum price cannot be greater than the maximum price.");
+            var range = Products.FindAll(x => x.ProductPrice >= minPrice && x.ProductPrice <= maxPrice);
+            //  if (minPrice > maxPrice) throw new ArgumentOutOfRangeException("Minimum price cannot be greater than the maximum price.");
 
             var products = GetProducts();
             var table = new ConsoleTable("ID", "Name", "Count", "Price", "Category");
-            if (products.Count == 0)
+            if (range.Count == 0)
             {
                 Console.WriteLine("NO PRODUCT YET");
                 return;
             }
-            foreach (var product in products)
+            foreach (var product in range)
             {
                 table.AddRow(product.Id, product.ProductName, product.Count, product.ProductPrice,
                      product.Category);

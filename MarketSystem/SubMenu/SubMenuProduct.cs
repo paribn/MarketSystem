@@ -17,7 +17,8 @@ namespace MarketSystem.SubMenu
             int option;
             do
             {
-               
+                Console.ForegroundColor = ConsoleColor.Yellow;  // metod yaz 
+
                 var table = new ConsoleTable("Numbers", "Description");
                 table.AddRow(1, "Add new product");
                 table.AddRow(2, "Update the products");
@@ -27,18 +28,11 @@ namespace MarketSystem.SubMenu
                 table.AddRow(6, "Show products by price range");
                 table.AddRow(7, "Search products by name");
                 table.AddRow(0,"Go back");
-                //Console.WriteLine("1.Add new product");
-                //Console.WriteLine("2.Update the products");
-                //Console.WriteLine("3.Remove product");
-                //Console.WriteLine("4.Show all products");
-                //Console.WriteLine("5.Show products by category ");
-                //Console.WriteLine("6.Show products by price range");
-                //Console.WriteLine("7.Search products by name");
-                //Console.WriteLine("0.Go back");
-                table.Write();
+                
                 Console.WriteLine("-----------");
                 Console.WriteLine("Enter option:");
-
+                table.Write();
+                Console.ResetColor();
 
                 while (!int.TryParse(Console.ReadLine(), out option))
                 {
@@ -74,6 +68,7 @@ namespace MarketSystem.SubMenu
                         Console.WriteLine("BYE!");
                         break;
                     default:
+                        Console.WriteLine("Invalid choice. Please try again.");
                         break;
                 }
 

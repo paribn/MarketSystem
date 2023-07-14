@@ -39,13 +39,14 @@ namespace MarketSystem.SubMenu
                 switch (option)
                 {
                     case 1:
-                       
+                        SaleMenu.AddNewSale();
                         break;
                     case 2:
                         break;
                     case 3:
                         break;
                     case 4:
+                        SaleMenu.ShowAllSales();
                         break;
                     case 5:
                         break;
@@ -56,6 +57,7 @@ namespace MarketSystem.SubMenu
                     case 0:
                         break;
                     default:
+
                         break;
                 }
 

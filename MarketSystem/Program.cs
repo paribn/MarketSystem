@@ -3,6 +3,7 @@ using MarketSystem.Common.Models;
 using MarketSystem.Services;
 using MarketSystem.SubMenu;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MarketSystem
 {
@@ -12,6 +13,7 @@ namespace MarketSystem
         {
 
             ProductService productService = new ProductService();
+            SaleService sealeService = new SaleService();
 
             //Console.ForegroundColor = ConsoleColor.Green;  // metod yaz 
             //Console.WriteLine("Enter");
@@ -26,7 +28,14 @@ namespace MarketSystem
                 Category = 0,
                 Count = 3
             };
+            Sales sales = new Sales()
+            {
+                Amount = 1,
+                Id = 1,
+                Date = DateTime.Now,
 
+
+            };
 
             Products products1 = new Products()
             {
@@ -49,22 +58,23 @@ namespace MarketSystem
             ProductService.Products.Add(products1);
             ProductService.Products.Add(products2);
 
-
+            SaleService.Sales.Add(sales);
             int option;
 
+           
             do
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;  // metod yaz 
                 var table = new ConsoleTable("Numbers", "Description");
-                // Add rows to the table
                 table.AddRow(1, "Operate on products");
                 table.AddRow(2, "Operate on sales");
                 table.AddRow(0, "Exit");
 
-                // Print the table
+                
+
+
                 table.Write();
 
-                // Prompt the user for input
                 Console.WriteLine("-----------");
                 Console.Write("Enter option: ");
 
@@ -76,8 +86,8 @@ namespace MarketSystem
                 }
 
                 // Clear the console before the next iteration
-                Console.Clear();
-
+                //Console.Clear();
+                Console.ResetColor();
 
                 switch (option)
                 {
@@ -95,11 +105,12 @@ namespace MarketSystem
                         break;
 
 
-                }   Console.ResetColor();
-                
+                }
 
 
             } while (option != 0);
         }
+
+
     }
 }

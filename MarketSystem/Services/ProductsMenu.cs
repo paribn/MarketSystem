@@ -29,7 +29,7 @@ namespace MarketSystem.Services
                 Console.WriteLine("----------------");
                 string category = Console.ReadLine().Trim().ToLower();
 
-
+                 
                 bool IsSuccessful = Enum.TryParse(typeof(ProductCategory), category, true,
                 out object parsedCategory);
                 if (!IsSuccessful)
@@ -52,12 +52,12 @@ namespace MarketSystem.Services
                 int count = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("----------------");
 
-                ProductService.AddProduct(name,price,category,count);
-                //int id = ProductService.AddProduct(name, price, parsedCategory, count);
+                int iD = ProductService.AddProduct(name, price, category, count);
 
-                //Console.WriteLine($"Successfully added product with code {id}");
+                Console.WriteLine($"Successfully added product with code {iD}");
 
                 ProductService.ShowAllProducts();
+
 
             }
             catch (Exception ex)
@@ -106,6 +106,7 @@ namespace MarketSystem.Services
             }
         }
 
+
         public static void DeleteProduct()
         {
             try
@@ -131,7 +132,7 @@ namespace MarketSystem.Services
         {
             try
             {
-               
+
                 Console.WriteLine("All categories:");
                 foreach (ProductCategory category in Enum.GetValues(typeof(ProductCategory)))
                 {
@@ -140,10 +141,10 @@ namespace MarketSystem.Services
 
                 Console.WriteLine("Enter the category (number):");
                 int categoryNumber = Convert.ToInt32(Console.ReadLine());
-               
+
                 ProductService.ShowAllCategory(categoryNumber);
 
-              //  ProductService.ShowAnyKindOfProductlistInTable(ProductService.ShowAllCategory(categoryNumber));
+                //  ProductService.ShowAnyKindOfProductlistInTable(ProductService.ShowAllCategory(categoryNumber));
 
             }
             catch (Exception ex)
@@ -174,8 +175,6 @@ namespace MarketSystem.Services
                 ProductService.SearchByName(name);
 
                 Console.WriteLine("-------------");
-                Console.WriteLine($"Successfully found:{name}");
-
                 ProductService.SearchByName(name);
                 ProductService.ShowAnyKindOfProductlistInTable(ProductService.SearchByName(name));
 
