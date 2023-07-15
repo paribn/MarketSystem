@@ -162,7 +162,7 @@ namespace MarketSystem.Services
             decimal price = decimal.Parse(Console.ReadLine());
             Console.WriteLine("Eter max price ");
             decimal price1 = decimal.Parse(Console.ReadLine());
-            ProductService.ShowPriceRange(price, price1);
+            ProductService.ShowPriceRange(price,price1);
         }
 
         public static void ShowProductbyName()

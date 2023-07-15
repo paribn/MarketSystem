@@ -696,11 +696,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Rovsen Novruzov\\Downloads\\MarketSystem\\MarketSystem\\MarketSystem.csproj",
+      "projectUniqueName": "C:\\Users\\Rovsen Novruzov\\Desktop\\MarketSystem\\MarketSystem\\MarketSystem.csproj",
       "projectName": "MarketSystem",
-      "projectPath": "C:\\Users\\Rovsen Novruzov\\Downloads\\MarketSystem\\MarketSystem\\MarketSystem.csproj",
+      "projectPath": "C:\\Users\\Rovsen Novruzov\\Desktop\\MarketSystem\\MarketSystem\\MarketSystem.csproj",
       "packagesPath": "C:\\Users\\Rovsen Novruzov\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Rovsen Novruzov\\Downloads\\MarketSystem\\MarketSystem\\obj\\",
+      "outputPath": "C:\\Users\\Rovsen Novruzov\\Desktop\\MarketSystem\\MarketSystem\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

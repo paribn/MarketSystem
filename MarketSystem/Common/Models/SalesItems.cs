@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace MarketSystem.Common.Models
 {
-    public class SalesItems :BaseEntity
+    public class SalesItems : BaseEntity
     {
-        private static int _count = 0;
+        private static int _count = 1;
         public SalesItems()
         {
-            Id = _count;
+            SaleItemNum = _count;
             _count++;
         }
-        
+
 
         public int SaleItemNum { get; set; }
         public int Number { get; set; }
@@ -26,6 +26,6 @@ namespace MarketSystem.Common.Models
         {
             _count = 1;
         }
-        
+
     }
 }

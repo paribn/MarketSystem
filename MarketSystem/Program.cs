@@ -28,15 +28,7 @@ namespace MarketSystem
                 Category = 0,
                 Count = 3
             };
-            Sales sales = new Sales()
-            {
-                Amount = 1,
-                Id = 1,
-                Date = DateTime.Now,
-
-
-            };
-
+          
             Products products1 = new Products()
             {
                 Id = 5,
@@ -58,7 +50,6 @@ namespace MarketSystem
             ProductService.Products.Add(products1);
             ProductService.Products.Add(products2);
 
-            SaleService.Sales.Add(sales);
             int option;
 
            

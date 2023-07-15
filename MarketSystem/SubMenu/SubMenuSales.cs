@@ -42,13 +42,16 @@ namespace MarketSystem.SubMenu
                         SaleMenu.AddNewSale();
                         break;
                     case 2:
+                        SaleMenu.ReturnSale();
                         break;
                     case 3:
+                        SaleMenu.DeleteSale();
                         break;
                     case 4:
                         SaleMenu.ShowAllSales();
                         break;
                     case 5:
+                        SaleMenu.ShowAllSalesDatebyPeriod();
                         break;
                     case 6:
                         break;

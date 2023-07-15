@@ -80,10 +80,21 @@ namespace MarketSystem.Services
 
         public static void DeleteSale()
         {
-            throw new NotImplementedException();
+            try
+            {
+                Console.WriteLine("Enter product ID :");
+                int productId = int.Parse(Console.ReadLine());
+                SaleService.DeleteSales(productId);
+                Console.WriteLine($"Successfully deleted product with ID: {productId}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Oops! Got an error!");
+                Console.WriteLine(ex.Message);
+            }
         }
 
-        public static void RemoveSale()
+        public static void ReturnSale()
         {
             throw new NotImplementedException();
         }
@@ -98,17 +109,17 @@ namespace MarketSystem.Services
             SaleService.ShowAllSales();
         }
 
-        public void ShowAllSalesDatebyPeriod()
+        public static void ShowAllSalesDatebyPeriod()
         {
             throw new NotImplementedException();
         }
 
-        public void ShowSalesbyPrice()
+        public static void ShowSalesbyPrice()
         {
             throw new NotImplementedException();
         }
 
-        public void ShowSalesDate()
+        public static void ShowSalesDate()
         {
             throw new NotImplementedException();
         }

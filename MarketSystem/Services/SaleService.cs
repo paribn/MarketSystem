@@ -24,37 +24,44 @@ namespace MarketSystem.Services
         }
         public static void AddSales(Sales sale)
         {
-            if (sale.Items == null || sale.Items.Count == 0)
+            try
             {
-                Console.WriteLine("No sale items found.");
-                return;
-            }
-
-            foreach (var saleItem in sale.Items)
-            {
-                if (saleItem.product.Id < 0)
-                    throw new FormatException("Product Code is lower than 0.");
-
-                
-                var findProductToAdd = ProductService.GetProductsiD(saleItem.product.Id);
-
-                if (findProductToAdd == null)
+                if (sale.Items == null || sale.Items.Count == 0)
                 {
-                    Console.WriteLine("No products found.");
+                    Console.WriteLine("No sale items found.");
                     return;
                 }
 
-                if (findProductToAdd.Count < saleItem.count)
+                foreach (var saleItem in sale.Items)
+                {
+                    if (saleItem.product.Id < 0)
+                        throw new FormatException("Product Code is lower than 0.");
+
+
+                    var findProductToAdd = ProductService.GetProductsiD(saleItem.product.Id);
+
+                    if (findProductToAdd == null)
                     {
-                    Console.WriteLine("Insufficient quantity available! The quantity you are asking for is more than available in the market!");
-                    return;
+                        Console.WriteLine("No products found.");
+                        return;
+                    }
+
+                    if (findProductToAdd.Count < saleItem.count)
+                    {
+                        Console.WriteLine("Insufficient quantity available! The quantity you are asking for is more than available in the market!");
+                        return;
+                    }
+
+                    findProductToAdd.Count -= saleItem.count;
                 }
 
-                findProductToAdd.Count -= saleItem.count;
+                Sales.Add(sale);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Oops! Got an error!{ex.Message}");
             }
 
-            Sales.Add(sale);
-          //  ProductService.ShowAnyKindOfProductlistInTable(Sales.Add;
 
         }
 
@@ -62,17 +69,26 @@ namespace MarketSystem.Services
         {
             try
             {
-                var sales1 = GetSales();
-                var table = new ConsoleTable("ID", "SalesItem", "Price", "DateTime");
-                if (sales1.Count == default)
+                var sales = GetSales();
+
+                var table = new ConsoleTable("Sales", "SalesItem", "Count", "Product Name", "Price", "DateTime");
+                if (sales.Count == 0)
                 {
                     Console.WriteLine("NO PRODUCT YET");
                     return;
                 }
-                foreach (var sales in sales1)
+                foreach (var sale in sales)
                 {
-                    table.AddRow(sales.Id,sales.Items,sales.Amount,sales.Date);
+                    if (sale.Items != null && sale.Items.Count > 0)
+                    {
+                        foreach (var saleitem in sale.Items)
+                        {
+                            var productName = saleitem.product != null ? saleitem.product.ProductName : string.Empty;
+                            table.AddRow(sale.Id, saleitem.SaleItemNum, saleitem.count, productName, sale.Amount, sale.Date);
+                        }
+                    }
                 }
+               
                 table.Write();
             }
             catch (Exception ex)
@@ -80,7 +96,15 @@ namespace MarketSystem.Services
                 Console.WriteLine("Oops! Got an error!");
                 Console.WriteLine(ex.Message);
             }
-            SaleMenu.AddNewSale();
+          
+        }
+
+        public static void DeleteSales(int code)
+        {
+            var existingProduct = Sales.Find(x => x.Id == code);
+            if (existingProduct == null)
+                throw new Exception($"Product with ID {code} not found");
+            Sales = Sales.Where(x => x.Id != code).ToList();
         }
     }
 }

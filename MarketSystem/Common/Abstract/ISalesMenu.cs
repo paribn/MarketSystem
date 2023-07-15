@@ -12,7 +12,7 @@ namespace MarketSystem.Common.Abstract
         {
 
         }
-        public static void RemoveSale()
+        public static void ReturnSale()
         {
 
         }

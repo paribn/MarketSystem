@@ -10,7 +10,7 @@ namespace MarketSystem.Common.Models
 {
     public class Products : BaseEntity
     {
-        private static int _count = 1;
+        private static int _count = 0;
         public Products()
         {
             Id = _count;
