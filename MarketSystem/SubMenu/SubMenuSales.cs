@@ -54,6 +54,7 @@ namespace MarketSystem.SubMenu
                         SaleMenu.ShowAllSalesDatebyPeriod();
                         break;
                     case 6:
+                        SaleMenu.ShowSalesbyPriceRange();
                         break;
                     case 7:
                         break;

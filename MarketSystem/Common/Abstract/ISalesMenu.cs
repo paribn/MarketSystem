@@ -28,7 +28,7 @@ namespace MarketSystem.Common.Abstract
         {
 
         }
-        public  static void ShowSalesbyPrice()
+        public  static void ShowSalesbyPriceRange()
         {
 
         }

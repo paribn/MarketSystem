@@ -101,7 +101,6 @@ namespace MarketSystem.Services
 
         public static void SearchSalesNumber()
         {
-            throw new NotImplementedException();
         }
 
         public static void ShowAllSales()
@@ -114,9 +113,13 @@ namespace MarketSystem.Services
             throw new NotImplementedException();
         }
 
-        public static void ShowSalesbyPrice()
+        public static void ShowSalesbyPriceRange()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Enter min price");
+            decimal priceSales = decimal.Parse(Console.ReadLine());
+            Console.WriteLine("Eter max price ");
+            decimal priceSaless = decimal.Parse(Console.ReadLine());
+            SaleService.DisplaySalesByPriceRange(priceSales, priceSaless);
         }
 
         public static void ShowSalesDate()

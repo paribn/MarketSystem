@@ -14,9 +14,9 @@ namespace MarketSystem.Services
         public static List<Sales> Sales;
 
 
-        public SaleService() 
+        public SaleService()
         {
-          Sales = new List<Sales>();
+            Sales = new List<Sales>();
         }
         public static List<Sales> GetSales()
         {
@@ -88,7 +88,7 @@ namespace MarketSystem.Services
                         }
                     }
                 }
-               
+
                 table.Write();
             }
             catch (Exception ex)
@@ -96,7 +96,7 @@ namespace MarketSystem.Services
                 Console.WriteLine("Oops! Got an error!");
                 Console.WriteLine(ex.Message);
             }
-          
+
         }
 
         public static void DeleteSales(int code)
@@ -105,6 +105,39 @@ namespace MarketSystem.Services
             if (existingProduct == null)
                 throw new Exception($"Product with ID {code} not found");
             Sales = Sales.Where(x => x.Id != code).ToList();
+        }
+
+        public static void ShowAllSalesDatebyPeriod()
+        {
+
+        }
+
+        public static void DisplaySalesByPriceRange(decimal minSalesPrice,decimal maxSalesPrice)
+        {
+            var range = Sales.Where(x => x.Amount >= minSalesPrice && x.Amount <= maxSalesPrice).ToList();
+
+            var sales = GetSales();
+
+            var table = new ConsoleTable("Sales", "SalesItem", "Count", "Product Name", "Total Price", "DateTime");
+            if (range.Count == 0)
+            {
+                Console.WriteLine("NO PRODUCT YET");
+                return;
+            }
+            foreach (var sale in range)
+            {
+                if (sale.Items != null && sale.Items.Count > 0)
+                {
+                    foreach (var saleitem in sale.Items)
+                    {
+                        var productName = saleitem.product != null ? saleitem.product.ProductName : string.Empty;
+                        table.AddRow(sale.Id, saleitem.SaleItemNum, saleitem.count, productName, sale.Amount, sale.Date);
+                    }
+                }
+            }
+
+            table.Write();
+            return;
         }
     }
 }

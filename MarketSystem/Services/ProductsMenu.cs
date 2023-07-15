@@ -159,6 +159,7 @@ namespace MarketSystem.Services
         public static void ShowProductPricebyRange()
         {
             Console.WriteLine("Enter min price");
+
             decimal price = decimal.Parse(Console.ReadLine());
             Console.WriteLine("Eter max price ");
             decimal price1 = decimal.Parse(Console.ReadLine());

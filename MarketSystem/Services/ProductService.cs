@@ -53,9 +53,9 @@ namespace MarketSystem.Services
 
             if (count < 0)
                 throw new FormatException("Invalid count!");
+
             bool isSuccessful
                 = Enum.TryParse(typeof(ProductCategory), productCategory, true, out object parsedDepartment);
-
             if (!isSuccessful)
             {
                 throw new InvalidDataException("Department not found!");
@@ -174,8 +174,8 @@ namespace MarketSystem.Services
 
         public static void ShowPriceRange(decimal minPrice, decimal maxPrice)
         {
+            // Filter sales within the given price range
             var range = Products.FindAll(x => x.ProductPrice >= minPrice && x.ProductPrice <= maxPrice);
-            //  if (minPrice > maxPrice) throw new ArgumentOutOfRangeException("Minimum price cannot be greater than the maximum price.");
 
             var products = GetProducts();
             var table = new ConsoleTable("ID", "Name", "Count", "Price", "Category");
