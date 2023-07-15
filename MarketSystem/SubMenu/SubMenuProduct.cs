@@ -65,7 +65,7 @@ namespace MarketSystem.SubMenu
                         ProductsMenu.ShowProductbyName();
                         break;
                     case 0:
-                        Console.WriteLine("BYE!");
+                        Console.WriteLine("Return to main menu");
                         break;
                     default:
                         Console.WriteLine("Invalid choice. Please try again.");

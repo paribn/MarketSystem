@@ -26,10 +26,16 @@ namespace MarketSystem.Services
             return Products;
         }
 
-        public static Products GetProductsiD(int code)
+        //// this method takes me to the SaleService and returns the id of the product
+        public static Products GetProductsiD(int code)    
         {
             return Products.FirstOrDefault(x => x.Id == code);
-        }
+        }  
+
+
+        /// <summary>
+        /// adds a new product
+        /// </summary>
         public static int AddProduct(string name, decimal price,
             string productCategory, int count)
         {
@@ -74,13 +80,19 @@ namespace MarketSystem.Services
             return newProduct.Id;
         }
 
-        public static void DeleteProduct(int productID)
+
+
+        /// <summary>
+        /// deletes by product Id
+        /// </summary>
+        public static void DeleteProduct(int productID)  
         {
             var existingProduct = Products.FirstOrDefault(x => x.Id == productID);
             if (existingProduct == null)
                 throw new Exception($"Product with ID {productID} not found");
             Products = Products.Where(x => x.Id != productID).ToList();
         }
+
 
         /// <summary>
         /// This method returns the list of all products
@@ -110,7 +122,7 @@ namespace MarketSystem.Services
             }
         }
 
-        public static void ListEnum()
+        public static void ListEnum() 
         {
             foreach (var item in Enum.GetNames(typeof(ProductCategory)))
             {
@@ -119,14 +131,18 @@ namespace MarketSystem.Services
         }
 
 
+        /// <summary>
+        /// Searches by the name of the entered product
+        /// </summary>
         public static List<Products> SearchByName(string productname)
         {
-            var searchname = ProductService.Products.Where(x => x.ProductName.ToLower().Trim() == productname.ToLower().Trim()).ToList();
+            var searchname = Products.Where(x => x.ProductName.ToLower().Trim() == productname.ToLower().Trim()).ToList();
             if (searchname == null)
                 throw new Exception($"There is no {searchname} product");
 
             return searchname;
         }
+
 
         /// <summary>
         /// this table method
@@ -157,8 +173,13 @@ namespace MarketSystem.Services
 
         }
 
+
+        /// <summary>
+        /// this method finds and adjusts the product by its iD
+        /// </summary>
         public static void UpdateProduct(int Id, string name, int count, object category, decimal price)
         {
+            // Find the product to update
             var Update = Products.FirstOrDefault(x => x.Id == Id);
             if (Update == null)
                 throw new Exception($"{Id} is invalid");
@@ -172,6 +193,10 @@ namespace MarketSystem.Services
 
         }
 
+       
+        /// <summary>
+        /// Finds the price range of the given products
+        /// </summary>
         public static void ShowPriceRange(decimal minPrice, decimal maxPrice)
         {
             // Filter sales within the given price range
@@ -193,6 +218,10 @@ namespace MarketSystem.Services
             return;
         }
 
+
+        /// <summary>
+        /// Shows the whole category
+        /// </summary>
         public static void ShowAllCategory(object productCategory)
         {
             foreach (var item in Enum.GetNames(typeof(ProductCategory)))
@@ -205,9 +234,7 @@ namespace MarketSystem.Services
                 Console.WriteLine("Invalid category number!");
 
                 return;
-
             }
-
 
             ProductCategory selectedCategory = (ProductCategory)productCategory;
 
@@ -220,7 +247,6 @@ namespace MarketSystem.Services
                 Console.WriteLine($"Name: {product.ProductName}");
                 Console.WriteLine($"Quantity: {product.Count}");
                 Console.WriteLine($"Price: {product.ProductPrice}");
-                Console.WriteLine();
             }
 
         }

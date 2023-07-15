@@ -4,6 +4,7 @@ using MarketSystem.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace MarketSystem.Services
     public class SaleMenu : ISalesMenu
     {
         private static SaleService saleService = new();
-        private List<Sales> sales;
+        private  List<Sales> sales;
 
         public static void AddNewSale()
         {
@@ -89,8 +90,7 @@ namespace MarketSystem.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Oops! Got an error!");
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("Error message: " + ex.Message);
             }
         }
 
@@ -101,7 +101,21 @@ namespace MarketSystem.Services
 
         public static void SearchSalesNumber()
         {
+            try
+            {
+                Console.WriteLine("Enter sales number");
+                Console.WriteLine("<><><><><><><><><<>");
+                int num = int.Parse(Console.ReadLine());
+                SaleService.SearchSaleNumber(num);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error message: " + ex.Message);
+            }
+
         }
+
 
         public static void ShowAllSales()
         {
@@ -110,21 +124,34 @@ namespace MarketSystem.Services
 
         public static void ShowAllSalesDatebyPeriod()
         {
-            throw new NotImplementedException();
+            try
+            {
+                Console.WriteLine("Enter start date (mm/dd/yyyy): ");
+                DateTime startDate = DateTime.ParseExact(Console.ReadLine(), "mm/dd/yyyy", CultureInfo.InvariantCulture);
+
+                Console.WriteLine("Enter end date (mm/dd/yyyy): ");
+                DateTime endDate = DateTime.ParseExact(Console.ReadLine(), "mm/dd/yyyy", CultureInfo.InvariantCulture);
+                SaleService.AllSalesDatebyPeriod(startDate, endDate);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Oops! Got an error! { ex.Message } ");
+            }
+
         }
 
         public static void ShowSalesbyPriceRange()
         {
-            Console.WriteLine("Enter min price");
+            Console.WriteLine("Enter min SalePrice");
             decimal priceSales = decimal.Parse(Console.ReadLine());
-            Console.WriteLine("Eter max price ");
+            Console.WriteLine("Eter max SalePrice ");
             decimal priceSaless = decimal.Parse(Console.ReadLine());
             SaleService.DisplaySalesByPriceRange(priceSales, priceSaless);
         }
 
         public static void ShowSalesDate()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

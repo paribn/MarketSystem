@@ -57,11 +57,16 @@ namespace MarketSystem.SubMenu
                         SaleMenu.ShowSalesbyPriceRange();
                         break;
                     case 7:
+                        SaleMenu.ShowSalesDate();
+                        break;
+                    case 8:
+                        SaleMenu.SearchSalesNumber();
                         break;
                     case 0:
+                        Console.WriteLine("Return to main menu");
                         break;
                     default:
-
+                        Console.WriteLine("Invalid choice. Please try again.");
                         break;
                 }
 

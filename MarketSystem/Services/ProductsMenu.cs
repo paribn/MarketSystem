@@ -158,12 +158,18 @@ namespace MarketSystem.Services
 
         public static void ShowProductPricebyRange()
         {
-            Console.WriteLine("Enter min price");
-
-            decimal price = decimal.Parse(Console.ReadLine());
-            Console.WriteLine("Eter max price ");
-            decimal price1 = decimal.Parse(Console.ReadLine());
-            ProductService.ShowPriceRange(price,price1);
+            try
+            {
+                Console.WriteLine("Enter min price");
+                decimal price = decimal.Parse(Console.ReadLine());
+                Console.WriteLine("Eter max price ");
+                decimal price1 = decimal.Parse(Console.ReadLine());
+                ProductService.ShowPriceRange(price, price1);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Oops! Got an error!{ex.Message}");
+            }
         }
 
         public static void ShowProductbyName()
@@ -172,11 +178,9 @@ namespace MarketSystem.Services
             try
             {
                 Console.WriteLine("Search product by name");
+                Console.WriteLine("<><><><><><><>><><><><>");
                 string name = Console.ReadLine();
-                ProductService.SearchByName(name);
 
-                Console.WriteLine("-------------");
-                ProductService.SearchByName(name);
                 ProductService.ShowAnyKindOfProductlistInTable(ProductService.SearchByName(name));
 
             }

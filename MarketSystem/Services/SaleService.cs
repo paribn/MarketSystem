@@ -93,51 +93,106 @@ namespace MarketSystem.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Oops! Got an error!");
-                Console.WriteLine(ex.Message);
+                Console.WriteLine($"Oops! Got an error!{ex.Message}");
+
             }
 
         }
 
         public static void DeleteSales(int code)
         {
-            var existingProduct = Sales.Find(x => x.Id == code);
-            if (existingProduct == null)
+            var existingSales = Sales.Find(x => x.Id == code);
+            if (existingSales == null)
                 throw new Exception($"Product with ID {code} not found");
             Sales = Sales.Where(x => x.Id != code).ToList();
+            //if ()
         }
 
-        public static void ShowAllSalesDatebyPeriod()
+        public static void AllSalesDatebyPeriod(DateTime startDate, DateTime endDate)
         {
 
-        }
+            if (startDate > endDate)
+                throw new InvalidDataException("Start date can not be greater than end date!");
+            endDate = endDate.AddDays(1).AddSeconds(-1);
+            var period = Sales.FindAll(x => x.Date >= startDate && x.Date <= endDate).ToList();
 
-        public static void DisplaySalesByPriceRange(decimal minSalesPrice,decimal maxSalesPrice)
-        {
-            var range = Sales.Where(x => x.Amount >= minSalesPrice && x.Amount <= maxSalesPrice).ToList();
-
-            var sales = GetSales();
-
-            var table = new ConsoleTable("Sales", "SalesItem", "Count", "Product Name", "Total Price", "DateTime");
-            if (range.Count == 0)
+            if (endDate.Date > DateTime.Now.AddDays(1).Date)
+                throw new Exception("End date cannot be greater than today's day!");
+            var table = new ConsoleTable("Sales", "SalesItem", "Count", "Product Name", "Price", "DateTime");
+            if (period.Count > 0)
             {
-                Console.WriteLine("NO PRODUCT YET");
-                return;
-            }
-            foreach (var sale in range)
-            {
-                if (sale.Items != null && sale.Items.Count > 0)
+                foreach (var sale in period)
                 {
-                    foreach (var saleitem in sale.Items)
+                    if (sale.Items != null && sale.Items.Count > 0)
                     {
-                        var productName = saleitem.product != null ? saleitem.product.ProductName : string.Empty;
-                        table.AddRow(sale.Id, saleitem.SaleItemNum, saleitem.count, productName, sale.Amount, sale.Date);
+                        foreach (var saleitem in sale.Items)
+                        {
+                            var productName = saleitem.product != null ? saleitem.product.ProductName : string.Empty;
+                            table.AddRow(sale.Id, saleitem.SaleItemNum, saleitem.count, productName, sale.Amount, sale.Date);
+                        }
                     }
                 }
             }
-
             table.Write();
-            return;
         }
+
+        public static void DisplaySalesByPriceRange(decimal minSalesPrice, decimal maxSalesPrice)
+        {
+            try
+            {
+                // Filter sales within the given price range
+                var range = Sales.Where(x => x.Amount >= minSalesPrice && x.Amount <= maxSalesPrice).ToList();
+
+                //var sales = GetSales();
+                if (minSalesPrice > maxSalesPrice)
+                    throw new ArgumentOutOfRangeException("Max price cannot be less than min price!");
+
+                var table = new ConsoleTable("Sales", "SalesItem", "Count", "Product Name", "Total Price", "DateTime");
+                if (range.Count == 0)
+                {
+                    Console.WriteLine("NO PRODUCT YET");
+                    return;
+                }
+                foreach (var sale in range)
+                {
+                    if (sale.Items != null && sale.Items.Count > 0)
+                    {
+                        foreach (var saleitem in sale.Items)
+                        {
+                            var productName = saleitem.product != null ? saleitem.product.ProductName : string.Empty;
+                            table.AddRow(sale.Id, saleitem.SaleItemNum, saleitem.count, productName, sale.Amount, sale.Date);
+                        }
+                    }
+                }
+
+                table.Write();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Oops! Got an error!{ex.Message}");
+            }
+
+        }
+
+        public static void ShowSalesDate(DateTime date)
+        {
+            var searchDate = Sales.Where(x => x.Date == date).ToList();
+            if (searchDate == null)
+                throw new Exception($"There is no {searchDate} product");
+            //if (date <= DateTime.Now)
+            //    throw new InvalidDataException("");
+        }
+
+        public static void SearchSaleNumber(int id)
+        {
+            var searchname = Sales.Where(x => x.Id == id).ToList();
+            if (searchname == null)
+                throw new Exception($"There is no {searchname} product");
+
+            if (id < 0)
+                throw new FormatException("Patient ID is invalid!");
+
+        }
+
     }
 }
