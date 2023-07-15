@@ -131,7 +131,13 @@ namespace MarketSystem.Services
 
                 Console.WriteLine("Enter end date (mm/dd/yyyy): ");
                 DateTime endDate = DateTime.ParseExact(Console.ReadLine(), "mm/dd/yyyy", CultureInfo.InvariantCulture);
-                SaleService.AllSalesDatebyPeriod(startDate, endDate);
+
+               // SaleService.MyTable(SaleService.AllSalesDatebyPeriod(startDate, endDate));
+
+                 // SaleService.MyTable(salelist, salesItemsList);
+                  SaleService.AllSalesDatebyPeriod(startDate, endDate);
+
+                // SaleService.MyTable(SaleService.AllSalesDatebyPeriod(startDate, endDate));
             }
             catch (Exception ex)
             {
@@ -140,7 +146,7 @@ namespace MarketSystem.Services
 
         }
 
-        public static void ShowSalesbyPriceRange()
+        public static void ShowSalesbyPriceRange()  // bu ishliyir
         {
             Console.WriteLine("Enter min SalePrice");
             decimal priceSales = decimal.Parse(Console.ReadLine());
@@ -151,7 +157,9 @@ namespace MarketSystem.Services
 
         public static void ShowSalesDate()
         {
-            
+            Console.WriteLine("enter Date (mm/dd/yyyy");
+            DateTime times = DateTime.ParseExact(Console.ReadLine(), "mm/dd/yyyy", CultureInfo.InvariantCulture);
+            SaleService.ShowSalesDate(times);
         }
     }
 }

@@ -13,7 +13,11 @@ namespace MarketSystem
         {
 
             ProductService productService = new ProductService();
-            SaleService sealeService = new SaleService();
+            SaleService salesService = new SaleService();
+
+            
+            SaleMenu saleMenu = new SaleMenu();
+            
 
             //Console.ForegroundColor = ConsoleColor.Green;  // metod yaz 
             //Console.WriteLine("Enter");

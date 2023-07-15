@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -71,7 +72,7 @@ namespace MarketSystem.Services
             {
                 var sales = GetSales();
 
-                var table = new ConsoleTable("Sales", "SalesItem", "Count", "Product Name", "Price", "DateTime");
+                var table = new ConsoleTable("SalesiD", "SalesItem", "Count", "Product Name", " Total Price", "DateTime");
                 if (sales.Count == 0)
                 {
                     Console.WriteLine("NO PRODUCT YET");
@@ -99,7 +100,7 @@ namespace MarketSystem.Services
 
         }
 
-        public static void DeleteSales(int code)
+        public static void DeleteSales(int code)  // isliyr
         {
             var existingSales = Sales.Find(x => x.Id == code);
             if (existingSales == null)
@@ -110,17 +111,25 @@ namespace MarketSystem.Services
 
         public static void AllSalesDatebyPeriod(DateTime startDate, DateTime endDate)
         {
-
-            if (startDate > endDate)
-                throw new InvalidDataException("Start date can not be greater than end date!");
-            endDate = endDate.AddDays(1).AddSeconds(-1);
-            var period = Sales.FindAll(x => x.Date >= startDate && x.Date <= endDate).ToList();
-
-            if (endDate.Date > DateTime.Now.AddDays(1).Date)
-                throw new Exception("End date cannot be greater than today's day!");
-            var table = new ConsoleTable("Sales", "SalesItem", "Count", "Product Name", "Price", "DateTime");
-            if (period.Count > 0)
+            try
             {
+                var period = Sales.FindAll(x => x.Date >= startDate && x.Date <= endDate).ToList();
+
+                if (startDate > endDate)
+                    throw new InvalidDataException("Start date can not be greater than end date!");
+
+                endDate = endDate.AddDays(1).AddSeconds(-1);
+
+                if (endDate.Date > DateTime.Now.AddDays(1).Date)
+                    throw new Exception("End date cannot be greater than today's day!");
+
+                var table = new ConsoleTable("Sales", "SalesItem", "Count", "Product Name", "Price", "DateTime");
+                if (period.Count > 0)
+                {
+
+                    Console.WriteLine("NO PRODUCT YET");
+                    return;
+                }
                 foreach (var sale in period)
                 {
                     if (sale.Items != null && sale.Items.Count > 0)
@@ -132,8 +141,14 @@ namespace MarketSystem.Services
                         }
                     }
                 }
+
+                table.Write();
             }
-            table.Write();
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Oops! Got an error!{ex.Message}");
+            }
+
         }
 
         public static void DisplaySalesByPriceRange(decimal minSalesPrice, decimal maxSalesPrice)
@@ -179,6 +194,26 @@ namespace MarketSystem.Services
             var searchDate = Sales.Where(x => x.Date == date).ToList();
             if (searchDate == null)
                 throw new Exception($"There is no {searchDate} product");
+            var table = new ConsoleTable("Sales", "SalesItem", "Count", "Product Name", "Price", "DateTime");
+            if (searchDate.Count > 0)
+            {
+
+                Console.WriteLine("NO PRODUCT YET");
+                return;
+            }
+            foreach (var sale in searchDate)
+            {
+                if (sale.Items != null && sale.Items.Count > 0)
+                {
+                    foreach (var saleitem in sale.Items)
+                    {
+                        var productName = saleitem.product != null ? saleitem.product.ProductName : string.Empty;
+                        table.AddRow(sale.Id, saleitem.SaleItemNum, saleitem.count, productName, sale.Amount, sale.Date);
+                    }
+                }
+            }
+
+            table.Write();
             //if (date <= DateTime.Now)
             //    throw new InvalidDataException("");
         }
@@ -193,6 +228,38 @@ namespace MarketSystem.Services
                 throw new FormatException("Patient ID is invalid!");
 
         }
+
+        public static void MyTable(List<Sales> SalesList, List<SalesItems> salesItemList)
+        {
+
+            try
+            {
+                var salestable = SalesList;
+                var salesitemtable = salesItemList;
+                var table = new ConsoleTable("Sales", "SalesItem", "Count", "Product Name", "Price", "DateTime");
+                if (salestable.Count == 0 && salesitemtable.Count == 0)
+                {
+                    Console.WriteLine("No produtc yet");
+                    return;
+                }
+                foreach (var saless in salestable)
+                {
+                    foreach (var item in salesitemtable)
+                    {
+                        table.AddRow(saless.Id, item.SaleItemNum, item.count,
+                            item.product.ProductName, saless.Amount, saless.Date);
+                    }
+                }
+                table.Write();
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine("Oops! Got an error!");
+                Console.WriteLine(ex.Message);
+            }
+        }
+
 
     }
 }
