@@ -17,7 +17,7 @@ namespace MarketSystem.SubMenu
             int option;
             do
             {
-                Console.ForegroundColor = ConsoleColor.Gray;  // metod yaz 
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;  // metod yaz 
 
                 var table = new ConsoleTable("Numbers", "Description");
                 table.AddRow(1, "Add new product");

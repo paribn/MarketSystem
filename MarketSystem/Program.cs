@@ -17,7 +17,7 @@ namespace MarketSystem
 
             
             SaleMenu saleMenu = new SaleMenu();
-            
+
 
             //Console.ForegroundColor = ConsoleColor.Green;  // metod yaz 
             //Console.WriteLine("Enter");
@@ -30,16 +30,16 @@ namespace MarketSystem
                 ProductName = "Milk",
                 ProductPrice = 2,
                 Category = 0,
-                Count = 3
+                Count = 54
             };
-          
+
             Products products1 = new Products()
             {
                 Id = 5,
                 ProductName = "Bread",
                 ProductPrice = 7,
                 Category = 0,
-                Count = 1
+                Count = 232
             };
             Products products2 = new Products()
             {
@@ -47,7 +47,7 @@ namespace MarketSystem
                 ProductName = "Apple",
                 ProductPrice = 23,
                 Category = 0,
-                Count = 4
+                Count = 112
             };
 
             ProductService.Products.Add(products);

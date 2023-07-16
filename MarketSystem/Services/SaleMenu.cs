@@ -15,12 +15,13 @@ namespace MarketSystem.Services
     public class SaleMenu : ISalesMenu
     {
         private static SaleService saleService = new();
-        private  List<Sales> sales;
+        private List<Sales> sales;
 
         public static void AddNewSale()
         {
             try
             {
+                ProductService.ShowAllProducts();
                 SalesItems.ResetSaleItems();
 
                 List<SalesItems> saleItems = new List<SalesItems>();
@@ -34,17 +35,31 @@ namespace MarketSystem.Services
                     while (!int.TryParse(Console.ReadLine(), out productCode))
                     {
                         Console.WriteLine("Invalid product code! Please enter a valid integer:");
+
                     }
 
-                    Console.WriteLine("Enter the quantity:");
+                    var existingProduct = ProductService.Products.FirstOrDefault(x => x.Id == productCode);
+
+                    if (existingProduct == null)
+                    {
+                        throw new Exception($"Product with Id: {productCode}");
+                    }
+
+                    Console.WriteLine("Enter the product count:");
                     int quantity;
 
                     while (!int.TryParse(Console.ReadLine(), out quantity))
                     {
                         Console.WriteLine("Invalid quantity! Please enter a valid integer:");
                     }
+                    if (quantity <= 0)
+                    {
+                        throw new FormatException("count cannot be less than zero");
+
+                    }
 
                     var product = ProductService.GetProductsiD(productCode);
+
 
                     var salesItem = new SalesItems
                     {
@@ -53,28 +68,42 @@ namespace MarketSystem.Services
                     };
                     saleItems.Add(salesItem);
 
-                    Console.WriteLine("Do you want to add more items? (yes/no)");
-                    string choice = Console.ReadLine();
+                    Console.WriteLine("Do you want to add more items? (Y-yes/N-no)");
 
-                    if (choice.ToLower() != "yes")
+                Start:
+                    var input = Console.ReadKey();
+
+                    switch (input.Key) //Switch on Key enum
                     {
-                        addItems = false;
+                        case ConsoleKey.Y:
+                            Console.WriteLine("\n");
+                            addItems = true;
+                            break;
+                        case ConsoleKey.N:
+                            Console.WriteLine("\n");
+                            addItems = false;
+                            break;
+                        default:
+                            goto Start;
+                            break;
                     }
 
+                    var Sale = new Sales
+                    {
+                        Date = DateTime.Now,
+                        Amount = saleItems.Sum(item => item.product.ProductPrice * item.count),
+                        Items = saleItems
+                    };
+
+                    SaleService.AddSales(Sale);
                 }
 
-                var Sale = new Sales
-                {
-                    Date = DateTime.Now,
-                    Amount = saleItems.Sum(item => item.product.ProductPrice * item.count),
-                    Items = saleItems
-                };
-
-                SaleService.AddSales(Sale);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error message: " + ex.Message);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
+                Console.ResetColor();
             }
         }
 
@@ -84,18 +113,55 @@ namespace MarketSystem.Services
             try
             {
                 Console.WriteLine("Enter product ID :");
+                Console.WriteLine("<><><><><><><><><<>");
                 int productId = int.Parse(Console.ReadLine());
                 SaleService.DeleteSales(productId);
                 Console.WriteLine($"Successfully deleted product with ID: {productId}");
+               
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error message: " + ex.Message);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
+                Console.ResetColor();
             }
         }
 
         public static void ReturnSale()
         {
+            try
+            {
+                Console.WriteLine("Enter Sale Code: ");
+                int saleCode;
+                while (!int.TryParse(Console.ReadLine(), out saleCode))
+                {
+                    Console.WriteLine("Invalid Sale code! Please enter a valid integer:");
+                }
+
+                Console.WriteLine("Enter Sale Item Code: ");
+                int saleItemCode;
+                while (!int.TryParse(Console.ReadLine(), out saleItemCode))
+                {
+                    Console.WriteLine("Invalid Sale item number! Please enter a valid integer:");
+                }
+
+                Console.WriteLine("Enter the quantity:");
+                int productQuantityForReturn;
+
+                while (!int.TryParse(Console.ReadLine(), out productQuantityForReturn))
+                {
+                    Console.WriteLine("Invalid quantity! Please enter a valid integer:");
+                }
+
+                SaleService.ReturnSales(saleCode, saleItemCode, productQuantityForReturn);
+
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
+                Console.ResetColor();
+            }
 
         }
 
@@ -110,11 +176,12 @@ namespace MarketSystem.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error message: " + ex.Message);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
+                Console.ResetColor();
             }
 
         }
-
 
         public static void ShowAllSales()
         {
@@ -125,40 +192,61 @@ namespace MarketSystem.Services
         {
             try
             {
-                Console.WriteLine("Enter start date (mm/dd/yyyy): ");
-                DateTime startDate = DateTime.ParseExact(Console.ReadLine().Trim(), "MM/dd/yyyy HH:mm:ss tt", CultureInfo.InvariantCulture);
+                Console.WriteLine("Enter start date this format -> MM/dd/yyyy HH:mm:ss");
+                Console.WriteLine("<><><><><><><><><<>");
+                DateTime startDate = DateTime.ParseExact(Console.ReadLine().Trim(), "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
 
-                Console.WriteLine("Enter end date (mm/dd/yyyy): ");
-                DateTime endDate = DateTime.ParseExact(Console.ReadLine().Trim(), "MM/dd/yyyy HH:mm:ss tt", CultureInfo.InvariantCulture);
+                Console.WriteLine("Enter end date this format -> dd/MM/yyyy HH:mm:ss");
+                Console.WriteLine("<><><><><><><><><<>");
+                DateTime endDate = DateTime.ParseExact(Console.ReadLine().Trim(), "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
 
-               // SaleService.MyTable(SaleService.AllSalesDatebyPeriod(startDate, endDate));
 
-                 // SaleService.MyTable(salelist, salesItemsList);
-                  SaleService.AllSalesDatebyPeriod(startDate, endDate);
+                SaleService.AllSalesDatebyPeriod(startDate, endDate);
 
-                // SaleService.MyTable(SaleService.AllSalesDatebyPeriod(startDate, endDate));
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Oops! Got an error! { ex.Message } ");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
+                Console.ResetColor();
             }
 
         }
 
-        public static void ShowSalesbyPriceRange()  // bu ishliyir
+        public static void ShowSalesbyPriceRange()  
         {
-            Console.WriteLine("Enter min SalePrice");
-            decimal priceSales = decimal.Parse(Console.ReadLine());
-            Console.WriteLine("Eter max SalePrice ");
-            decimal priceSaless = decimal.Parse(Console.ReadLine());
-            SaleService.DisplaySalesByPriceRange(priceSales, priceSaless);
+            try
+            {
+                Console.WriteLine("Enter min SalePrice");
+                Console.WriteLine("<><><><><><><><><<>");
+                decimal priceSales = decimal.Parse(Console.ReadLine());
+                Console.WriteLine("Eter max SalePrice ");
+                Console.WriteLine("<><><><><><><><><<>");
+                decimal priceSaless = decimal.Parse(Console.ReadLine());
+                SaleService.DisplaySalesByPriceRange(priceSales, priceSaless);
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
+                Console.ResetColor();
+            }
         }
 
         public static void ShowSalesDate()
         {
-            Console.WriteLine("enter Date (mm/dd/yyyy");
-            DateTime times = DateTime.ParseExact(Console.ReadLine(), "mm/dd/yyyy", CultureInfo.InvariantCulture);
-            SaleService.ShowSalesDate(times);
+            try
+            {
+                Console.WriteLine("Enter Date  this format -> mm/dd/yyyy HH:mm:ss");
+                DateTime times = DateTime.ParseExact(Console.ReadLine().Trim(), "mm/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                SaleService.ShowSalesDate(times);
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
+                Console.ResetColor();
+            }
         }
     }
 }
