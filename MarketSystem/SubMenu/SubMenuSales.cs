@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleTables;
 using MarketSystem.Services;
 
 namespace MarketSystem.SubMenu
@@ -15,19 +16,23 @@ namespace MarketSystem.SubMenu
             int option;
             do
             {
-                Console.WriteLine("1.Add new sales");
-                Console.WriteLine("2.Remove the sale");
-                Console.WriteLine("3.Delete sale in number");
-                Console.WriteLine("4.Show all sales");
-                Console.WriteLine("5.Show sales in period");
-                Console.WriteLine("6.Show amount period in sales");
-                Console.WriteLine("7.Showing sales on a given date");
-                Console.WriteLine("8.Showing sales on a given number");
-                Console.WriteLine("0.Go back");
+                Console.ForegroundColor = ConsoleColor.Blue;  // metod yaz 
 
+                var table = new ConsoleTable("Numbers", "Description");
+                table.AddRow(1, "Add new sales");
+                table.AddRow(2, "Remove the sale");
+                table.AddRow(3, "Delete sale in code");
+                table.AddRow(4, "Show all sales");
+                table.AddRow(5, "Display sales date range");
+                table.AddRow(6, "Display sales amount range");
+                table.AddRow(7, "Showing sales on a given date");
+                table.AddRow(8, "Showing sales on a given number");
+                table.AddRow(0, "Go back");
+               
                 Console.WriteLine("-----------");
                 Console.WriteLine("Enter option:");
-
+                table.Write(Format.Minimal);
+                Console.ResetColor();
 
                 while (!int.TryParse(Console.ReadLine(), out option))
                 {

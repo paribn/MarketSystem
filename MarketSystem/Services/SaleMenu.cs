@@ -96,7 +96,7 @@ namespace MarketSystem.Services
 
         public static void ReturnSale()
         {
-            throw new NotImplementedException();
+
         }
 
         public static void SearchSalesNumber()
@@ -107,7 +107,6 @@ namespace MarketSystem.Services
                 Console.WriteLine("<><><><><><><><><<>");
                 int num = int.Parse(Console.ReadLine());
                 SaleService.SearchSaleNumber(num);
-
             }
             catch (Exception ex)
             {
@@ -127,10 +126,10 @@ namespace MarketSystem.Services
             try
             {
                 Console.WriteLine("Enter start date (mm/dd/yyyy): ");
-                DateTime startDate = DateTime.ParseExact(Console.ReadLine(), "mm/dd/yyyy", CultureInfo.InvariantCulture);
+                DateTime startDate = DateTime.ParseExact(Console.ReadLine().Trim(), "MM/dd/yyyy HH:mm:ss tt", CultureInfo.InvariantCulture);
 
                 Console.WriteLine("Enter end date (mm/dd/yyyy): ");
-                DateTime endDate = DateTime.ParseExact(Console.ReadLine(), "mm/dd/yyyy", CultureInfo.InvariantCulture);
+                DateTime endDate = DateTime.ParseExact(Console.ReadLine().Trim(), "MM/dd/yyyy HH:mm:ss tt", CultureInfo.InvariantCulture);
 
                // SaleService.MyTable(SaleService.AllSalesDatebyPeriod(startDate, endDate));
 

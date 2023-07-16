@@ -17,7 +17,7 @@ namespace MarketSystem.SubMenu
             int option;
             do
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;  // metod yaz 
+                Console.ForegroundColor = ConsoleColor.Gray;  // metod yaz 
 
                 var table = new ConsoleTable("Numbers", "Description");
                 table.AddRow(1, "Add new product");
@@ -31,7 +31,7 @@ namespace MarketSystem.SubMenu
                 
                 Console.WriteLine("-----------");
                 Console.WriteLine("Enter option:");
-                table.Write();
+                table.Write(Format.Minimal);
                 Console.ResetColor();
 
                 while (!int.TryParse(Console.ReadLine(), out option))

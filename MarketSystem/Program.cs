@@ -59,7 +59,7 @@ namespace MarketSystem
            
             do
             {
-                Console.ForegroundColor = ConsoleColor.DarkYellow;  // metod yaz 
+                Console.ForegroundColor = ConsoleColor.DarkGreen;  // metod yaz 
                 var table = new ConsoleTable("Numbers", "Description");
                 table.AddRow(1, "Operate on products");
                 table.AddRow(2, "Operate on sales");
@@ -68,7 +68,7 @@ namespace MarketSystem
                 
 
 
-                table.Write();
+                table.Write(Format.Minimal);
 
                 Console.WriteLine("-----------");
                 Console.Write("Enter option: ");

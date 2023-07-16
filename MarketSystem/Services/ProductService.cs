@@ -64,7 +64,7 @@ namespace MarketSystem.Services
                 = Enum.TryParse(typeof(ProductCategory), productCategory, true, out object parsedDepartment);
             if (!isSuccessful)
             {
-                throw new InvalidDataException("Department not found!");
+                throw new InvalidDataException("Category not found!");
             }
 
             var newProduct = new Products
