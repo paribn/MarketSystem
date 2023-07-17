@@ -60,8 +60,9 @@ namespace MarketSystem.Services
         {
             try
             {
+                ProductService.ShowAllProducts();
                 // Prompt for and read the code of the product to update
-                Console.WriteLine("Enter the code:");
+                Console.WriteLine("Enter the iD:");
                 int code = int.Parse(Console.ReadLine());
 
                 Console.WriteLine("Enter the new product's name:");
@@ -103,8 +104,8 @@ namespace MarketSystem.Services
 
         public static void DeleteProduct()
         {
-           
-            Console.WriteLine("Enter product ID:");
+            ProductService.ShowAllProducts();
+            Console.WriteLine("Enter product iD:");
             string input = Console.ReadLine();
 
             if(!int.TryParse(input, out int productId))
@@ -120,6 +121,7 @@ namespace MarketSystem.Services
         public static void ShowAllProduct()
         {
             ProductService.ShowAllProducts();
+
         }
 
 
@@ -154,6 +156,7 @@ namespace MarketSystem.Services
         {
             try
             {
+                ProductService.ShowAllProducts();
                 Console.WriteLine("Enter min price");
                 decimal price = decimal.Parse(Console.ReadLine());
                 Console.WriteLine("Eter max price ");

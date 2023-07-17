@@ -27,6 +27,7 @@ namespace MarketSystem.Services
             return Products;
         }
 
+
         /// this method takes me to the SaleService and returns the iD of the product
         public static Products GetProductsiD(int code)
         {
@@ -62,7 +63,7 @@ namespace MarketSystem.Services
 
             // Parse the product category
             bool isSuccessful
-                = Enum.TryParse(typeof(ProductCategory), productCategory, true, out object parsedDepartment);
+                = Enum.TryParse(typeof(ProductCategory), productCategory, true, out object parsedCategory);
             if (!isSuccessful)
             {
                 throw new InvalidDataException("Category not found!");
@@ -74,7 +75,7 @@ namespace MarketSystem.Services
                 ProductName = name,
                 ProductPrice = price,
                 Count = count,
-                Category = (ProductCategory)parsedDepartment
+                Category = (ProductCategory)parsedCategory
             };
 
             // Add the new product to the list of products
@@ -83,6 +84,50 @@ namespace MarketSystem.Services
             return newProduct.Id;
         }
 
+        public static void UpdateProduct(int Id, string name, int count, object category, decimal price)
+        {
+            try
+            {
+                // Find the product to update
+                var Update = Products.FirstOrDefault(x => x.Id == Id);
+
+                if (Update == null)
+                    throw new Exception($"{Id} is invalid");
+
+                bool isString = false;
+                for (int i = 0; i < name.Length; i++)
+                {
+                    if (char.IsLetter(name[i]))
+                    {
+                        isString = true;
+                    }
+                }
+                if (!isString)
+                {
+                    throw new Exception("Name must be string");
+                }
+
+                if (price < 0)
+                    throw new FormatException("Price is lower than 0!");
+
+                if (count < 0)
+                    throw new FormatException("Invalid count!");
+
+                Update.ProductName = name;
+                Update.ProductPrice = price;
+                Update.Count = count;
+                Update.Category = (ProductCategory)category;
+                ShowAllProducts();
+
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
+                Console.ResetColor();
+            }
+
+        }
 
         public static void DeleteProduct(int productID)
         {
@@ -111,20 +156,21 @@ namespace MarketSystem.Services
 
         }
 
-
         public static void ShowAllProducts()
         {
             try
             {
+                SaleService.ShowAllSales();
+
                 // Retrieve the products
                 var products = GetProducts();
 
                 var table = new ConsoleTable("ID", "Name", "Product Count", "Price", "Category");
 
                 // If there are no products, display a message and return
-                if (products.Count == default)
+                if (products.Count == 0 )
                 {
-                    Console.WriteLine("NO PRODUCT YEET");
+                    Console.WriteLine("NO PRODUCT YET");
                     return;
                 }
 
@@ -142,6 +188,97 @@ namespace MarketSystem.Services
                 Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
                 Console.ResetColor();
             }
+        }
+
+
+        public static void ShowAllCategory(object productCategory)
+        {
+            try
+            {
+                // Display all available product categories
+                foreach (var item in Enum.GetNames(typeof(ProductCategory)))
+                {
+                    Console.WriteLine(item);
+                }
+
+                // Validate the provided product category
+                if (!Enum.IsDefined(typeof(ProductCategory), productCategory))
+                {
+                    Console.WriteLine("Invalid category number!");
+
+                    return;
+                }
+
+                // Convert the product category to the appropriate enum value
+                ProductCategory selectedCategory = (ProductCategory)productCategory;
+
+                var productsInCategory = Products.Where(x => x.Category == selectedCategory);
+
+                // Check if there are no products in the selected category
+                if (!productsInCategory.Any())
+                {
+                    Console.WriteLine("No products found for this category.");
+                    return;
+                }
+
+                Console.WriteLine($"Showing products in the {selectedCategory} category:");
+                Console.WriteLine("><><><><><><<><><>>>><><><><><><><><><><><");
+
+                var table = new ConsoleTable("ID", "Name", "Count", "Price", "Category");
+                foreach (var product in productsInCategory)
+                {
+                    table.AddRow(product.Id, product.ProductName, product.Count, product.ProductPrice,
+                         product.Category);
+                }
+                table.Write(Format.Minimal);
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
+                Console.ResetColor();
+            }
+        }
+
+        public static void ShowPriceRange(decimal minPrice, decimal maxPrice)
+        {
+            try
+            {
+                // Validate the price range values
+                if (maxPrice < 0 || minPrice < 0)
+                { throw new FormatException("The value cannot be negative"); }
+
+                // Filter products within the given price range
+                var range = Products.FindAll(x => x.ProductPrice >= minPrice && x.ProductPrice <= maxPrice);
+
+
+                var table = new ConsoleTable("ID", "Name", "Count", "Price", "Category");
+
+                // Check if the minimum price is greater than the maximum price
+                if (minPrice > maxPrice)
+                    throw new FormatException("Minimum is greater than maximum");
+
+                // Check if there are no products within the price range
+                if (range.Count == 0)
+                {
+                    throw new FormatException("No product yet");
+                }
+
+                foreach (var product in range)
+                {
+                    table.AddRow(product.Id, product.ProductName, product.Count, product.ProductPrice,
+                         product.Category);
+                }
+
+                table.Write(Format.Minimal);
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
+                Console.ResetColor();
+            }
+
         }
 
 
@@ -197,142 +334,8 @@ namespace MarketSystem.Services
         }
 
 
-        public static void UpdateProduct(int Id, string name, int count, object category, decimal price)
-        {
-            try
-            {
-                // Find the product to update
-                var Update = Products.FirstOrDefault(x => x.Id == Id);
-
-                if (Update == null)
-                    throw new Exception($"{Id} is invalid");
-
-                bool isString = false;
-                for (int i = 0; i < name.Length; i++)
-                {
-                    if (char.IsLetter(name[i]))
-                    {
-                        isString = true;
-                    }
-                }
-                if (!isString)
-                {
-                    throw new Exception("Name must be string");
-                }
-
-                if (price < 0)
-                    throw new FormatException("Price is lower than 0!");
-
-                if (count < 0)
-                    throw new FormatException("Invalid count!");
-
-                Update.ProductName = name;
-                Update.ProductPrice = price;
-                Update.Count = count;
-                Update.Category = (ProductCategory)category;
-                ShowAllProducts();
-
-            }
-            catch (Exception ex)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
-                Console.ResetColor();
-            }
-
-        }
 
 
-        public static void ShowPriceRange(decimal minPrice, decimal maxPrice)
-        {
-            try
-            {
-                // Validate the price range values
-                if (maxPrice < 0 || minPrice < 0)
-                { throw new FormatException("The value cannot be negative"); }
-
-                // Filter products within the given price range
-                var range = Products.FindAll(x => x.ProductPrice >= minPrice && x.ProductPrice <= maxPrice);
-
-
-                var table = new ConsoleTable("ID", "Name", "Count", "Price", "Category");
-
-                // Check if the minimum price is greater than the maximum price
-                if (minPrice > maxPrice)
-                    throw new FormatException("Minimum is greater than maximum");
-
-                // Check if there are no products within the price range
-                if (range.Count == 0)
-                {
-                    throw new FormatException("No product yet");
-                }
-
-                foreach (var product in range)
-                {
-                    table.AddRow(product.Id, product.ProductName, product.Count, product.ProductPrice,
-                         product.Category);
-                }
-
-                table.Write(Format.Minimal);
-            }
-            catch (Exception ex)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
-                Console.ResetColor();
-            }
-
-        }
-
-
-        public static void ShowAllCategory(object productCategory)
-        {
-            try
-            {
-                // Display all available product categories
-                foreach (var item in Enum.GetNames(typeof(ProductCategory)))
-                {
-                    Console.WriteLine(item);
-                }
-
-                // Validate the provided product category
-                if (!Enum.IsDefined(typeof(ProductCategory), productCategory))
-                {
-                    Console.WriteLine("Invalid category number!");
-
-                    return;
-                }
-
-                // Convert the product category to the appropriate enum value
-                ProductCategory selectedCategory = (ProductCategory)productCategory;
-
-                var productsInCategory = Products.Where(x => x.Category == selectedCategory);
-
-                // Check if there are no products in the selected category
-                if (!productsInCategory.Any())
-                {
-                    Console.WriteLine("No products found for this category.");
-                    return;
-                }
-
-                Console.WriteLine($"Showing products in the {selectedCategory} category:");
-                Console.WriteLine("><><><><><><<><><>>>><><><><><><><><><><><");
-
-                var table = new ConsoleTable("ID", "Name", "Count", "Price", "Category");
-                foreach (var product in productsInCategory)
-                {
-                    table.AddRow(product.Id, product.ProductName, product.Count, product.ProductPrice,
-                         product.Category);
-                }
-                table.Write(Format.Minimal);
-            }
-            catch (Exception ex)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
-                Console.ResetColor();
-            }
-        }
 
 
     }

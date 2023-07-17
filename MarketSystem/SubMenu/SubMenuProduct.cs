@@ -17,7 +17,7 @@ namespace MarketSystem.SubMenu
             int option;
             do
             {
-                Console.ForegroundColor = ConsoleColor.DarkMagenta;  // metod yaz 
+                Console.ForegroundColor = ConsoleColor.White; 
 
                 var table = new ConsoleTable("Numbers", "Description");
                 table.AddRow(1, "Add new product");
@@ -65,10 +65,14 @@ namespace MarketSystem.SubMenu
                         ProductsMenu.ShowProductbyName();
                         break;
                     case 0:
-                        Console.WriteLine("Return to main menu");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(new ConsoleTable("Return to main menu"));
+                        Console.ResetColor();
                         break;
                     default:
-                        Console.WriteLine("Invalid choice. Please try again.");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(new ConsoleTable("Invalid choice. Please try again."));
+                        Console.ResetColor();
                         break;
                 }
 

@@ -31,7 +31,7 @@ namespace MarketSystem.Services
                 {
                     Console.WriteLine("Enter product code:");
                     int productCode;
-
+                    Console.WriteLine("-----------------");
                     while (!int.TryParse(Console.ReadLine(), out productCode))
                     {
                         Console.WriteLine("Invalid product code! Please enter a valid integer:");
@@ -47,6 +47,7 @@ namespace MarketSystem.Services
 
                     Console.WriteLine("Enter the product count:");
                     int quantity;
+                    Console.WriteLine("-----------------");
 
                     while (!int.TryParse(Console.ReadLine(), out quantity))
                     {
@@ -69,6 +70,7 @@ namespace MarketSystem.Services
                     saleItems.Add(salesItem);
 
                     Console.WriteLine("Do you want to add more items? (Y-yes/N-no)");
+                    Console.WriteLine("-----------------");
 
                 Start:
                     var input = Console.ReadKey();
@@ -78,6 +80,7 @@ namespace MarketSystem.Services
                         case ConsoleKey.Y:
                             Console.WriteLine("\n");
                             addItems = true;
+                            ProductService.ShowAllProducts();
                             break;
                         case ConsoleKey.N:
                             Console.WriteLine("\n");
@@ -96,6 +99,7 @@ namespace MarketSystem.Services
                     };
 
                     SaleService.AddSales(Sale);
+                    SaleService.ShowAllSales();
                 }
 
             }
@@ -108,44 +112,26 @@ namespace MarketSystem.Services
         }
 
 
-        public static void DeleteSale()
-        {
-            try
-            {
-                Console.WriteLine("Enter product ID :");
-                Console.WriteLine("<><><><><><><><><<>");
-                int productId = int.Parse(Console.ReadLine());
-                SaleService.DeleteSales(productId);
-                Console.WriteLine($"Successfully deleted product with ID: {productId}");
-               
-            }
-            catch (Exception ex)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
-                Console.ResetColor();
-            }
-        }
-
         public static void ReturnSale()
         {
             try
             {
-                Console.WriteLine("Enter Sale Code: ");
+                SaleService.ShowAllSales();
+                Console.WriteLine("Enter Sale iD: ");
                 int saleCode;
                 while (!int.TryParse(Console.ReadLine(), out saleCode))
                 {
                     Console.WriteLine("Invalid Sale code! Please enter a valid integer:");
                 }
 
-                Console.WriteLine("Enter Sale Item Code: ");
+                Console.WriteLine("Enter Sale Item iD: ");
                 int saleItemCode;
                 while (!int.TryParse(Console.ReadLine(), out saleItemCode))
                 {
                     Console.WriteLine("Invalid Sale item number! Please enter a valid integer:");
                 }
 
-                Console.WriteLine("Enter the quantity:");
+                Console.WriteLine("Enter the count:");
                 int productQuantityForReturn;
 
                 while (!int.TryParse(Console.ReadLine(), out productQuantityForReturn))
@@ -154,7 +140,7 @@ namespace MarketSystem.Services
                 }
 
                 SaleService.ReturnSales(saleCode, saleItemCode, productQuantityForReturn);
-
+                SaleService.ShowAllSales();
             }
             catch (Exception ex)
             {
@@ -165,14 +151,16 @@ namespace MarketSystem.Services
 
         }
 
-        public static void SearchSalesNumber()
+        public static void DeleteSale()
         {
             try
             {
-                Console.WriteLine("Enter sales number");
+                SaleService.ShowAllSales();
+                Console.WriteLine("Enter sales iD :");
                 Console.WriteLine("<><><><><><><><><<>");
-                int num = int.Parse(Console.ReadLine());
-                SaleService.SearchSaleNumber(num);
+                int salesiD = int.Parse(Console.ReadLine());
+                SaleService.DeleteSales(salesiD);
+
             }
             catch (Exception ex)
             {
@@ -180,18 +168,20 @@ namespace MarketSystem.Services
                 Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
                 Console.ResetColor();
             }
-
         }
+
 
         public static void ShowAllSales()
         {
             SaleService.ShowAllSales();
         }
 
+
         public static void ShowAllSalesDatebyPeriod()
         {
             try
             {
+                SaleService.ShowAllSales();
                 Console.WriteLine("Enter start date this format -> MM/dd/yyyy HH:mm:ss");
                 Console.WriteLine("<><><><><><><><><<>");
                 DateTime startDate = DateTime.ParseExact(Console.ReadLine().Trim(), "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
@@ -213,10 +203,12 @@ namespace MarketSystem.Services
 
         }
 
+
         public static void ShowSalesbyPriceRange()  
         {
             try
             {
+
                 Console.WriteLine("Enter min SalePrice");
                 Console.WriteLine("<><><><><><><><><<>");
                 decimal priceSales = decimal.Parse(Console.ReadLine());
@@ -233,12 +225,14 @@ namespace MarketSystem.Services
             }
         }
 
+
         public static void ShowSalesDate()
         {
             try
             {
-                Console.WriteLine("Enter Date  this format -> mm/dd/yyyy HH:mm:ss");
-                DateTime times = DateTime.ParseExact(Console.ReadLine().Trim(), "mm/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                SaleService.ShowAllSales();
+                Console.WriteLine("Enter Date  this format -> MM/dd/yyyy HH:mm:ss");
+                DateTime times = DateTime.ParseExact(Console.ReadLine().Trim(), "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                 SaleService.ShowSalesDate(times);
             }
             catch (Exception ex)
@@ -248,5 +242,28 @@ namespace MarketSystem.Services
                 Console.ResetColor();
             }
         }
+
+
+        public static void SearchSalesNumber()
+        {
+            try
+            {
+                SaleService.ShowAllSales();
+                Console.WriteLine("Enter sales iD");
+                Console.WriteLine("<><><><><><><><><<>");
+                int num = int.Parse(Console.ReadLine());
+                SaleService.SearchSaleNumber(num);
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Error while processing.Error message : {ex.Message} ");
+                Console.ResetColor();
+            }
+
+        }
+
+
+
     }
 }

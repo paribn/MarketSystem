@@ -16,7 +16,7 @@ namespace MarketSystem.SubMenu
             int option;
             do
             {
-                Console.ForegroundColor = ConsoleColor.Blue;  // metod yaz 
+                Console.ForegroundColor = ConsoleColor.Blue;
 
                 var table = new ConsoleTable("Numbers", "Description");
                 table.AddRow(1, "Add new sales");
@@ -28,7 +28,7 @@ namespace MarketSystem.SubMenu
                 table.AddRow(7, "Showing sales on a given date");
                 table.AddRow(8, "Showing sales on a given number");
                 table.AddRow(0, "Go back");
-               
+
                 Console.WriteLine("-----------");
                 Console.WriteLine("Enter option:");
                 table.Write(Format.Minimal);
@@ -68,10 +68,14 @@ namespace MarketSystem.SubMenu
                         SaleMenu.SearchSalesNumber();
                         break;
                     case 0:
-                        Console.WriteLine("Return to main menu");
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine(new ConsoleTable("Return to main menu"));
+                        Console.ResetColor();
                         break;
                     default:
-                        Console.WriteLine("Invalid choice. Please try again.");
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine(new ConsoleTable("Invalid choice. Please try again."));
+                        Console.ResetColor();
                         break;
                 }
 
